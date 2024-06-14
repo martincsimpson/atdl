@@ -4,6 +4,18 @@
       <div class="task-name" data-inline-edit-target="display" data-action="dblclick->inline-edit#edit">
         <%= task.name %>
       </div>
+
+      <!-- Task Status Display -->
+      <div class="task-status" style="color: <%= task_status_color(task.workflow_state) %>;">
+        <%= task.current_state.to_s.humanize %>
+        <% if task.workflow_state == 'delegated' %>
+          (Delegated to: <%= task.delegated_to %>)
+        <% end %>
+        <% if task.snoozed_until.present? %>
+          (Snoozed until: <%= task.snoozed_until.strftime("%b %d, %Y") %>)
+        <% end %>
+      </div>
+
       <% if task.workflow_state != 'done' && task.workflow_state != 'dropped' %>
         <%= link_to 'Add Subtask', '#', class: 'button add-subtask', data: { action: 'click->task-form#addForm', url: new_task_task_path(task, format: :turbo_stream), target_id: "#{dom_id(task, :new_task_form)}" } %>
         <div class="workflow-buttons">
