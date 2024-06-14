@@ -9,6 +9,11 @@ class TasksController < ApplicationController
     @tasks = Task.where(workflow_state: nil)
   end
 
+  def today
+    @tasks_scope = Task.where('(snoozed_until IS NULL OR snoozed_until <= ?) AND workflow_state NOT IN (?, ?)', Date.today, 'done', 'dropped')
+    @workspaces = Workspace.includes(projects: { tasks: :tasks }).all
+  end
+
   def new
     @task = @parent.tasks.build
     respond_to do |format|

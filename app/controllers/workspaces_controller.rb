@@ -3,6 +3,7 @@ class WorkspacesController < ApplicationController
 
   # GET /workspaces or /workspaces.json
   def index
+    @tasks_scope = nil
     @workspaces = Workspace.includes(:projects).all
   end
 

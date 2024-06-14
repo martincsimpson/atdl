@@ -1,0 +1,20 @@
+<h1>Today</h1>
+
+<% if @workspaces.any? %>
+  <% @workspaces.each do |workspace| %>
+    <div class="workspace" id="<%= dom_id(workspace) %>">
+      <h2><%= workspace.name %></h2>
+      <div id="<%= dom_id(workspace, :projects_container) %>">
+        <% if workspace.projects.any? %>
+          <ul>
+            <% workspace.projects.each do |project| %>
+              <%= render partial: 'projects/project', locals: { project: project, tasks_scope: @tasks_scope } %>
+            <% end %>
+          </ul>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+<% else %>
+  <p>No tasks for today.</p>
+<% end %>
