@@ -46,7 +46,7 @@
           <% filtered_tasks.each do |task| %>
             <tr>
               <td>
-                <%= render partial: 'tasks/task', locals: { task: task, tasks_scope: tasks_scope } %>
+                <%= render partial: 'tasks/task', locals: { task: task, tasks_scope: local_assigns[:tasks_scope] ? tasks_scope : nil  } %>
               </td>
             </tr>
           <% end %>
