@@ -20,3 +20,14 @@
 <% else %>
   <p>No tasks for today.</p>
 <% end %>
+
+<div class="recurring_tasks">
+  <h2>Recurring Tasks</h2>
+<% if @recurring_tasks.any? %>
+<% @recurring_tasks.each do |recurring_task| %>
+  <%= render partial: 'recurring_tasks/recurring_task', locals: { recurring_task: recurring_task } %>
+<% end %>
+<% else %>
+Congrats, all complete!
+<% end %>
+</div>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_14_064900) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_14_090931) do
   create_table "projects", force: :cascade do |t|
     t.string "name"
     t.integer "workspace_id"
@@ -19,6 +19,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_14_064900) do
     t.datetime "updated_at", null: false
     t.index ["parent_project_id"], name: "index_projects_on_parent_project_id"
     t.index ["workspace_id"], name: "index_projects_on_workspace_id"
+  end
+
+  create_table "recurring_tasks", force: :cascade do |t|
+    t.string "name"
+    t.string "schedule"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.json "log"
   end
 
   create_table "tasks", force: :cascade do |t|

@@ -1,0 +1,11 @@
+<%= turbo_frame_tag dom_id(recurring_task) do %>
+  <div class="task" id="<%= dom_id(recurring_task) %>" data-controller="recurring-task-form">
+    <div class="task-header">
+      Recurring: <%= recurring_task.name %>
+      <span>Done? <%= recurring_task.done_for_today? %></span>
+      <%= form_with url: mark_done_recurring_task_path(recurring_task), method: :post, data: { turbo_frame: dom_id(recurring_task) } do %>
+        <%= submit_tag 'Done', class: 'button', disabled: recurring_task.done_for_today? %>
+      <% end %>
+    </div>
+  </div>
+<% end %>

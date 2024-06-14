@@ -1,0 +1,23 @@
+<h1>Recurring Tasks</h1>
+<%= link_to 'New Recurring Task', new_recurring_task_path, class: 'button' %>
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Schedule</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @recurring_tasks.each do |task| %>
+      <tr>
+        <td><%= task.name %></td>
+        <td><%= task.schedule %></td>
+        <td>
+          <%= link_to 'Edit', edit_recurring_task_path(task) %>
+          <%= link_to 'Delete', recurring_task_path(task), method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -23,6 +23,12 @@ Rails.application.routes.draw do
     end
   end
 
+  resources :recurring_tasks, only: [:index, :new, :create, :edit, :update, :destroy] do
+    member do
+      post 'mark_done'
+    end
+  end
+
   get 'inbox', to: 'tasks#inbox'
   get 'today', to: 'tasks#today'
   get 'review', to: 'tasks#review'
