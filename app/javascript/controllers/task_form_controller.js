@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["form", "delegateForm"]
+  static targets = ["form", "delegateForm", "deferForm"]
 
   connect() {
     console.log("TaskFormController connected")
@@ -24,7 +24,7 @@ export default class extends Controller {
         const targetElement = document.getElementById(targetId)
         if (targetElement) {
           console.log(`Inserting HTML into target element with ID: ${targetId}`)
-          targetElement.innerHTML = html;
+          targetElement.innerHTML = html
         } else {
           console.error(`Target element with ID ${targetId} not found`)
         }
@@ -35,5 +35,10 @@ export default class extends Controller {
   showDelegateForm(event) {
     event.preventDefault()
     this.delegateFormTarget.classList.remove("hidden")
+  }
+
+  showDeferForm(event) {
+    event.preventDefault()
+    this.deferFormTarget.classList.remove("hidden")
   }
 }

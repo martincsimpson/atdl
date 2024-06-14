@@ -13,7 +13,7 @@ class TasksController < ApplicationController
         render turbo_stream: turbo_stream.replace(
           dom_id(@parent, :new_task_form),
           partial: 'tasks/form',
-          locals: { task: @task, parent: @parent, project: find_root_project(@parent) }
+          locals: { task: @task, parent: @parent }
         )
       end
     end
@@ -40,7 +40,7 @@ class TasksController < ApplicationController
           render turbo_stream: turbo_stream.replace(
             dom_id(@parent, :new_task_form),
             partial: 'tasks/form',
-            locals: { task: @task, parent: @parent, project: find_root_project(@parent) }
+            locals: { task: @task, parent: @parent }
           )
         end
       end
@@ -75,9 +75,9 @@ class TasksController < ApplicationController
     event = params[:event].to_sym
     if @task.available_transitions.include?(event)
       if event == :delegate
-        delegated_to = params[:delegated_to]
-        snoozed_until = parse_snoozed_until(params[:snoozed_until])
-        @task.update(delegated_to: delegated_to, snoozed_until: snoozed_until)
+        @task.update(delegated_to: params[:delegated_to], snoozed_until: parse_snooze_date(params[:snoozed_until]))
+      elsif event == :defer
+        @task.update(deferred_reason: params[:deferred_reason], snoozed_until: parse_snooze_date(params[:snoozed_until]))
       end
       @task.process_event!(event)
       respond_to do |format|
@@ -110,11 +110,11 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:name, :parent_task_id, :delegated_to, :snoozed_until)
+    params.require(:task).permit(:name, :parent_task_id, :delegated_to, :snoozed_until, :deferred_reason)
   end
 
-  def parse_snoozed_until(value)
-    case value
+  def parse_snooze_date(snooze_option)
+    case snooze_option
     when 'tomorrow'
       1.day.from_now
     when 'few_days'

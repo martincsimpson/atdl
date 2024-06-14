@@ -10,6 +10,8 @@
         <%= task.current_state.to_s.humanize %>
         <% if task.workflow_state == 'delegated' %>
           (Delegated to: <%= task.delegated_to %>)
+        <% elsif task.workflow_state == 'deferred' %>
+          (Deferred: <%= task.deferred_reason %>)
         <% end %>
         <% if task.snoozed_until.present? %>
           (Snoozed until: <%= task.snoozed_until.strftime("%b %d, %Y") %>)
@@ -24,6 +26,11 @@
               <%= form_with url: update_status_task_path(task), method: :post, data: { turbo_frame: dom_id(task) }, class: "workflow-form" do %>
                 <%= hidden_field_tag :event, event %>
                 <%= submit_tag event.to_s.humanize, class: "transition-button", data: { action: 'click->task-form#showDelegateForm' } %>
+              <% end %>
+            <% elsif event == :defer %>
+              <%= form_with url: update_status_task_path(task), method: :post, data: { turbo_frame: dom_id(task) }, class: "workflow-form" do %>
+                <%= hidden_field_tag :event, event %>
+                <%= submit_tag event.to_s.humanize, class: "transition-button", data: { action: 'click->task-form#showDeferForm' } %>
               <% end %>
             <% else %>
               <%= form_with url: update_status_task_path(task), method: :post, data: { turbo_frame: dom_id(task) }, class: "workflow-form" do %>
@@ -50,6 +57,7 @@
       <% end %>
     </div>
 
+    <!-- Delegate Form -->
     <div class="delegate-form hidden" data-task-form-target="delegateForm">
       <%= form_with url: update_status_task_path(task), method: :post, data: { turbo_frame: dom_id(task) }, class: "delegate-form-inner" do %>
         <%= hidden_field_tag :event, 'delegate' %>
@@ -63,6 +71,24 @@
         </div>
         <div class="actions">
           <%= submit_tag 'Delegate' %>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- Defer Form -->
+    <div class="defer-form hidden" data-task-form-target="deferForm">
+      <%= form_with url: update_status_task_path(task), method: :post, data: { turbo_frame: dom_id(task) }, class: "defer-form-inner" do %>
+        <%= hidden_field_tag :event, 'defer' %>
+        <div class="field">
+          <%= label_tag :deferred_reason, "Reason for Deferment" %>
+          <%= text_field_tag :deferred_reason %>
+        </div>
+        <div class="field">
+          <%= label_tag :snoozed_until, "Snooze Until" %>
+          <%= select_tag :snoozed_until, options_for_select([['Tomorrow', 'tomorrow'], ['In a Few Days', 'few_days'], ['In a Week', 'week'], ['In a Month', 'month']]) %>
+        </div>
+        <div class="actions">
+          <%= submit_tag 'Defer' %>
         </div>
       <% end %>
     </div>

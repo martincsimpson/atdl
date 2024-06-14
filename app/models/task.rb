@@ -34,6 +34,12 @@ class Task < ApplicationRecord
       event :drop, transitions_to: :dropped
     end
     state :dropped
+
+    on_transition do |from, to, triggering_event, *event_args|
+      if to == :done
+        self.snoozed_until = nil
+      end
+    end
   end
 
   def load_workflow_state
