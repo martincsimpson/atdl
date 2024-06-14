@@ -1,0 +1,22 @@
+<div class="workspace" id="<%= dom_id(workspace) %>" data-controller="workspace-form">
+  <h2>
+    <%= workspace.name %>
+    <%= link_to 'Add Project', '#', class: 'button add-project', data: { action: 'click->workspace-form#addForm', url: new_workspace_project_path(workspace, format: :turbo_stream), target_id: "#{dom_id(workspace, :new_project_form)}" } %>
+  </h2>
+
+  <%= turbo_frame_tag dom_id(workspace, :new_project_form) do %>
+    <!-- This is where the new project form will be inserted -->
+  <% end %>
+
+  <%= turbo_frame_tag dom_id(workspace, :projects_container) do %>
+    <% if workspace.projects.any? %>
+      <ul>
+        <% workspace.projects.each do |project| %>
+          <li>
+            <%= render partial: 'projects/project', locals: { project: project } %>
+          </li>
+        <% end %>
+      </ul>
+    <% end %>
+  <% end %>
+</div>

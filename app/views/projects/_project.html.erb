@@ -1,0 +1,65 @@
+<%= turbo_frame_tag dom_id(project) do %>
+  <div class="project" id="<%= dom_id(project) %>" data-controller="inline-edit project-form task-form">
+    <div class="project-header">
+      <div class="project-name" data-inline-edit-target="display" data-action="dblclick->inline-edit#edit">
+        <%= project.name %>
+      </div>
+      <%= link_to 'Add Task', '#', class: 'button add-task', data: { action: 'click->task-form#addForm', url: new_project_task_path(project, format: :turbo_stream), target_id: "#{dom_id(project, :new_task_form)}" } %>
+      <%= link_to 'Add Project', '#', class: 'button add-subproject', data: { action: 'click->project-form#addForm', url: new_project_project_path(project, format: :turbo_stream), target_id: "#{dom_id(project, :new_project_form)}" } %>
+    </div>
+
+    <%= turbo_frame_tag dom_id(project, :new_project_form) do %>
+      <div class="form-container">
+        <!-- This is where the new subproject form will be inserted -->
+      </div>
+    <% end %>
+    
+    <%= turbo_frame_tag dom_id(project, :new_task_form) do %>
+      <div class="form-container">
+        <!-- This is where the new task form will be inserted -->
+      </div>
+    <% end %>
+
+    <div data-inline-edit-target="formContainer" class="hidden">
+      <%= turbo_frame_tag "#{dom_id(project)}_edit" do %>
+        <div class="form-container">
+          <%= form_with(model: project, url: project_path(project), method: :patch, data: { turbo_frame: dom_id(project), action: "turbo:submit-end->inline-edit#success", inline_edit_target: "form" }, local: true) do |form| %>
+            <%= form.text_field :name, class: 'form-field' %>
+            <div class="actions">
+              <%= form.submit "Save", data: { action: "click->inline-edit#save" } %>
+              <%= button_to "Cancel", "#", data: { action: "click->inline-edit#cancel" }, method: :get %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+
+    <%= turbo_frame_tag dom_id(project, :tasks_container) do %>
+      <% if project.tasks.any? %>
+        <table class="task-table">
+          <% project.tasks.each do |task| %>
+            <tr>
+              <td>
+                <%= render partial: 'tasks/task', locals: { task: task } %>
+              </td>
+            </tr>
+          <% end %>
+        </table>
+      <% end %>
+    <% end %>
+
+    <%= turbo_frame_tag dom_id(project, :projects_container) do %>
+      <% if project.projects.any? %>
+        <table class="project-table">
+          <% project.projects.each do |sub_project| %>
+            <tr>
+              <td>
+                <%= render partial: 'projects/project', locals: { project: sub_project } %>
+              </td>
+            </tr>
+          <% end %>
+        </table>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>

@@ -1,0 +1,54 @@
+<%= turbo_frame_tag dom_id(task) do %>
+  <div class="task" id="<%= dom_id(task) %>" data-controller="inline-edit task-form">
+    <div class="task-header">
+      <div class="task-name" data-inline-edit-target="display" data-action="dblclick->inline-edit#edit">
+        <%= task.name %>
+      </div>
+      <% if task.workflow_state != 'done' && task.workflow_state != 'dropped' %>
+        <%= link_to 'Add Subtask', '#', class: 'button add-subtask', data: { action: 'click->task-form#addForm', url: new_task_task_path(task, format: :turbo_stream), target_id: "#{dom_id(task, :new_task_form)}" } %>
+        <div class="workflow-buttons">
+          <% task.available_transitions.each do |event| %>
+            <%= form_with url: update_status_task_path(task), method: :post, data: { turbo_frame: dom_id(task) }, class: "workflow-form" do %>
+              <%= hidden_field_tag :event, event %>
+              <%= submit_tag event.to_s.humanize, class: "transition-button" %>
+            <% end %>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+
+    <div data-inline-edit-target="formContainer" class="hidden">
+      <%= turbo_frame_tag "#{dom_id(task)}_edit" do %>
+        <div class="form-container">
+          <%= form_with(model: task, url: task_path(task), method: :patch, data: { turbo_frame: dom_id(task), action: "turbo:submit-end->inline-edit#success", inline_edit_target: "form" }, local: true) do |form| %>
+            <%= form.text_field :name, class: 'form-field' %>
+            <div class="actions">
+              <%= form.submit "Save", data: { action: "click->inline-edit#save" } %>
+              <%= button_to "Cancel", "#", data: { action: "click->inline-edit#cancel" }, method: :get %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+
+    <%= turbo_frame_tag dom_id(task, :new_task_form) do %>
+      <div class="form-container">
+        <!-- This is where the new subtask form will be inserted -->
+      </div>
+    <% end %>
+
+    <%= turbo_frame_tag dom_id(task, :tasks_container) do %>
+      <% if task.tasks.any? %>
+        <table class="task-table">
+          <% task.tasks.each do |sub_task| %>
+            <tr>
+              <td>
+                <%= render partial: 'tasks/task', locals: { task: sub_task } %>
+              </td>
+            </tr>
+          <% end %>
+        </table>
+      <% end %>
+    <% end %>
+  </div>
+<% end %>

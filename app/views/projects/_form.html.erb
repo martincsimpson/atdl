@@ -1,0 +1,24 @@
+<%= form_with(model: project, url: project.new_record? ? (parent.is_a?(Project) ? project_projects_path(parent) : workspace_projects_path(parent)) : project_path(project), remote: true, html: { class: 'inline-form', data: { target: 'nested-form.form' } }) do |form| %>
+  <% if project.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(project.errors.count, "error") %> prohibited this project from being saved:</h2>
+      <ul>
+        <% project.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= form.text_field :name, placeholder: "Name" %>
+  </div>
+
+  <% if parent.is_a?(Project) %>
+    <%= form.hidden_field :parent_project_id, value: parent.id %>
+  <% end %>
+
+  <div class="actions">
+    <%= form.submit 'Save Project' %>
+  </div>
+<% end %>

@@ -1,0 +1,9 @@
+<div id="<%= dom_id(parent, :tasks_container) %>">
+  <ul>
+    <% tasks.each do |task| %>
+      <li>
+        <%= render partial: 'tasks/task', locals: { task: task, parent: parent } %>
+      </li>
+    <% end %>
+  </ul>
+</div>
