@@ -152,8 +152,7 @@
 <% filtered_tasks.each do |sub_task| %>
 
 
-<%= render partial: 'tasks/task', locals: { task: sub_task } %>
-
+<%= render partial: 'tasks/task', locals: { task: sub_task, tasks_scope: local_assigns[:tasks_scope], hide_add: local_assigns[:hide_add], hide_change: local_assigns[:hide_change] } %>
 
 <% end %>
 
