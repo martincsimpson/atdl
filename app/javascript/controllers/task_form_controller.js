@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["form", "delegateForm", "deferForm", "moveForm"]
+  static targets = ["form", "delegateForm", "deferForm", "moveForm", "updateSnoozeForm"]
 
   connect() {
     console.log("TaskFormController connected")
@@ -45,6 +45,11 @@ export default class extends Controller {
   showMoveForm(event) {
     event.preventDefault()
     this.moveFormTarget.classList.remove("hidden")
+  }
+
+  showSnoozeForm(event) {
+    event.preventDefault()
+    this.updateSnoozeFormTarget.classList.remove("hidden")
   }
     
 }

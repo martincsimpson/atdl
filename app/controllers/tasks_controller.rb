@@ -3,7 +3,7 @@ class TasksController < ApplicationController
   include ApplicationHelper
 
   before_action :set_project_or_task, only: [:new, :create, :create_inbox_task]
-  before_action :set_task, only: [:show, :edit, :update, :update_status, :move]
+  before_action :set_task, only: [:show, :edit, :update, :update_status, :clear_snooze, :move]
 
   def inbox
     @inbox_workspace = Workspace.find_by(name: 'Inbox')
@@ -125,28 +125,50 @@ class TasksController < ApplicationController
   end
 
   def update_status
-    event = params[:event].to_sym
-    if @task.available_transitions.include?(event)
-      if event == :delegate
-        @task.update(delegated_to: params[:delegated_to], snoozed_until: parse_snooze_date(params[:snoozed_until]))
-      elsif event == :defer
-        @task.update(deferred_reason: params[:deferred_reason], snoozed_until: parse_snooze_date(params[:snoozed_until]))
-      end
-      @task.process_event!(event)
-      respond_to do |format|
-        format.turbo_stream do
-          render turbo_stream: turbo_stream.replace(
-            dom_id(@task),
-            partial: 'tasks/task',
-            locals: { task: @task, parent: @task.parent_task || @task.project }
-          )
-        end
-        format.html { redirect_to @task.parent_task || @task.project }
-      end
+
+    # We're updating only snooze
+    if params[:event].nil? && params[:snoozed_until]
+      @task.update(snoozed_until: parse_snooze_date(params[:snoozed_until]))
     else
-      head :unprocessable_entity
+      event = params[:event].to_sym
+      if @task.available_transitions.include?(event)
+        if event == :delegate
+          @task.update(delegated_to: params[:delegated_to], snoozed_until: parse_snooze_date(params[:snoozed_until]))
+        elsif event == :defer
+          @task.update(deferred_reason: params[:deferred_reason], snoozed_until: parse_snooze_date(params[:snoozed_until]))
+        end
+        @task.process_event!(event)
+      else
+        head :unprocessable_entity
+      end
+    end
+
+    respond_to do |format|
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace(
+          dom_id(@task),
+          partial: 'tasks/task',
+          locals: { task: @task, parent: @task.parent_task || @task.project }
+        )
+      end
+      format.html { redirect_to @task.parent_task || @task.project }
     end
   end
+
+  def clear_snooze
+    @task.update(snoozed_until: nil)
+    respond_to do |format|
+      format.html { redirect_to @task, notice: 'Snooze date was successfully cleared.' }
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace(
+          dom_id(@task),
+          partial: 'tasks/task',
+          locals: { task: @task }
+        )
+      end
+    end
+  end
+
 
   def move
     new_parent_id = params[:new_parent_id]

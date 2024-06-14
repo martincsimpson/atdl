@@ -43,9 +43,12 @@
               <% end %>
             <% end %>
           </div>
+                    <!-- Add buttons to show snooze form and clear snooze date -->
+          <%= button_to 'Update Snooze', '#', class: 'button update-snooze-button', data: { action: 'click->task-form#showSnoozeForm' }, method: :get %>
+          <%= button_to 'Clear Snooze', clear_snooze_task_path(task), class: 'button clear-snooze-button', method: :post %>
+
         <% end %>
       <% end %>
-
     </div>
 
     <div data-inline-edit-target="formContainer" class="hidden">
@@ -66,13 +69,13 @@
     <div class="move-form hidden" data-task-form-target="moveForm">
       <%= turbo_frame_tag dom_id(task, :move_form) do %>
         <div class="form-container">
-          <%= form_with(url: move_task_path(task), method: :patch, data: { turbo_frame: dom_id(task) }) do |form| %>
+          <%= form_with(url: move_task_path(task), method: :patch, data: { turbo_frame: dom_id(task) }) do %>
             <div class="field">
               <%= label_tag :new_parent_id, "Move to Project/Task" %>
               <%= select_tag :new_parent_id, options_for_select(Project.all.collect { |p| [p.name, p.id] } + Task.all.collect { |t| [t.name, "task_#{t.id}"] }) %>
             </div>
             <div class="actions">
-              <%= form.submit 'Move' %>
+              <%= submit_tag 'Move' %>
             </div>
           <% end %>
         </div>
@@ -114,6 +117,21 @@
         </div>
       <% end %>
     </div>
+
+    <!-- Update Snooze Date Form -->
+    <% if task.workflow_state == 'delegated' || task.workflow_state == 'deferred' %>
+      <div class="update-snooze-form hidden" data-task-form-target="updateSnoozeForm">
+        <%= form_with url: update_status_task_path(task), method: :post, data: { turbo_frame: dom_id(task) } do %>
+          <div class="field">
+            <%= label_tag :snoozed_until, "Update Snooze Until" %>
+            <%= select_tag :snoozed_until, options_for_select([['Tomorrow', 'tomorrow'], ['In a Few Days', 'few_days'], ['In a Week', 'week'], ['In a Month', 'month']]) %>
+          </div>
+          <div class="actions">
+            <%= submit_tag 'Update' %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
 
     <%= turbo_frame_tag dom_id(task, :new_task_form) do %>
       <div class="form-container">

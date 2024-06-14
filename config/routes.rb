@@ -12,6 +12,8 @@ Rails.application.routes.draw do
       resources :tasks, only: [:new, :create], as: 'tasks', controller: 'tasks'
       member do
         post :update_status
+        post :clear_snooze
+        patch :move
       end
     end
   end
@@ -20,6 +22,7 @@ Rails.application.routes.draw do
     resources :tasks, only: [:new, :create], as: 'tasks', controller: 'tasks'
     member do
       post :update_status
+      post :clear_snooze
       patch :move
     end
     collection do 

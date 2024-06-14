@@ -46,6 +46,7 @@ class Task < ApplicationRecord
     on_transition do |from, to, triggering_event, *event_args|
       if to == :done
         self.snoozed_until = nil
+        self.save
       end
     end
   end
