@@ -25,5 +25,7 @@ Rails.application.routes.draw do
 
   get 'inbox', to: 'tasks#inbox'
   get 'today', to: 'tasks#today'
-  root 'workspaces#index'
+  get 'review', to: 'tasks#review'
+  get 'master', to: 'tasks#master'
+  root 'tasks#master'
 end

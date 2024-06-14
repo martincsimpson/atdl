@@ -35,7 +35,7 @@
     </div>
 
     <%= turbo_frame_tag dom_id(project, :tasks_container) do %>
-      <% if tasks_scope.present? %>
+      <% if local_assigns[:tasks_scope] %>
         <% filtered_tasks = project.tasks.where(id: tasks_scope.ids) %>
       <% else %>
         <% filtered_tasks = project.tasks %>
@@ -58,11 +58,13 @@
       <% if project.projects.any? %>
         <table class="project-table">
           <% project.projects.each do |sub_project| %>
-            <tr>
-              <td>
-                <%= render partial: 'projects/project', locals: { project: sub_project, tasks_scope: tasks_scope } %>
-              </td>
-            </tr>
+            <% if project_has_tasks?(sub_project, local_assigns[:tasks_scope] ? tasks_scope : nil) %>
+              <tr>
+                <td>
+                  <%= render partial: 'projects/project', locals: { project: sub_project, tasks_scope: local_assigns[:tasks_scope] ? tasks_scope : nil } %>
+                </td>
+              </tr>
+            <% end %>
           <% end %>
         </table>
       <% end %>

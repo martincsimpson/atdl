@@ -17,7 +17,8 @@
       <ul>
         <li><%= link_to 'Inbox', inbox_path, class: ('active' if current_page?(inbox_path)) %></li>
         <li><%= link_to 'Today', today_path, class: ('active' if current_page?(today_path)) %></li>
-        <li><%= link_to 'Master View', workspaces_path, class: ('active' if current_page?(workspaces_path)) %></li>
+        <li><%= link_to 'Review', review_path, class: ('active' if current_page?(review_path)) %></li>
+        <li><%= link_to 'Master View', master_path, class: ('active' if current_page?(master_path)) %></li>
       </ul>
     </div>
     <div class="main-content">
