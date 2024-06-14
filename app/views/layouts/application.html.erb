@@ -1,18 +1,27 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Todo</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+<head>
+  <title>Todo</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= stylesheet_link_tag 'workspaces', media: 'all', 'data-turbo-track': 'reload' %>
-    <%= javascript_importmap_tags %>
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= stylesheet_link_tag 'workspaces', media: 'all', 'data-turbo-track': 'reload' %>
+  <%= javascript_importmap_tags %>
+</head>
 
-  </head>
-
-  <body>
-    <%= yield %>
-  </body>
+<body>
+  <div class="container">
+    <div class="sidebar">
+      <ul>
+        <li><%= link_to 'Inbox', inbox_path, class: ('active' if current_page?(inbox_path)) %></li>
+        <li><%= link_to 'Master View', workspaces_path, class: ('active' if current_page?(workspaces_path)) %></li>
+      </ul>
+    </div>
+    <div class="main-content">
+      <%= yield %>
+    </div>
+  </div>
+</body>
 </html>

@@ -5,6 +5,10 @@ class TasksController < ApplicationController
   before_action :set_project_or_task, only: [:new, :create]
   before_action :set_task, only: [:show, :edit, :update, :update_status]
 
+  def inbox
+    @tasks = Task.where(workflow_state: nil)
+  end
+
   def new
     @task = @parent.tasks.build
     respond_to do |format|

@@ -23,5 +23,6 @@ Rails.application.routes.draw do
     end
   end
 
+  get 'inbox', to: 'tasks#inbox'
   root 'workspaces#index'
 end

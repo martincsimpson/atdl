@@ -1,0 +1,15 @@
+<h1>Inbox</h1>
+
+<% if @tasks.any? %>
+  <table class="task-table">
+    <% @tasks.each do |task| %>
+      <tr>
+        <td>
+          <%= render partial: 'tasks/task', locals: { task: task } %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+<% else %>
+  <p>No new tasks.</p>
+<% end %>
