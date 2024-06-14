@@ -18,30 +18,34 @@
         <% end %>
       </div>
 
-      <% if task.workflow_state != 'done' && task.workflow_state != 'dropped' %>
-        <%= link_to 'Add Subtask', '#', class: 'button add-subtask', data: { action: 'click->task-form#addForm', url: new_task_task_path(task, format: :turbo_stream), target_id: "#{dom_id(task, :new_task_form)}" } %>
-        <%= link_to 'Move', '#', class: 'button move-task', data: { action: 'click->task-form#showMoveForm', url: move_task_path(task, format: :turbo_stream), target_id: "#{dom_id(task, :move_form)}" } %>
-        <div class="workflow-buttons">
-          <% task.available_transitions.each do |event| %>
-            <% if event == :delegate %>
-              <%= form_with url: update_status_task_path(task), method: :post, data: { turbo_frame: dom_id(task) }, class: "workflow-form" do %>
-                <%= hidden_field_tag :event, event %>
-                <%= submit_tag event.to_s.humanize, class: "transition-button", data: { action: 'click->task-form#showDelegateForm' } %>
-              <% end %>
-            <% elsif event == :defer %>
-              <%= form_with url: update_status_task_path(task), method: :post, data: { turbo_frame: dom_id(task) }, class: "workflow-form" do %>
-                <%= hidden_field_tag :event, event %>
-                <%= submit_tag event.to_s.humanize, class: "transition-button", data: { action: 'click->task-form#showDeferForm' } %>
-              <% end %>
-            <% else %>
-              <%= form_with url: update_status_task_path(task), method: :post, data: { turbo_frame: dom_id(task) }, class: "workflow-form" do %>
-                <%= hidden_field_tag :event, event %>
-                <%= submit_tag event.to_s.humanize, class: "transition-button" %>
+      <%= link_to 'Move', '#', class: 'button move-task', data: { action: 'click->task-form#showMoveForm', url: move_task_path(task, format: :turbo_stream), target_id: "#{dom_id(task, :move_form)}" } %>
+
+      <% unless local_assigns[:hide_change] %>
+        <% if task.workflow_state != 'done' && task.workflow_state != 'dropped' %>
+          <%= link_to 'Add Subtask', '#', class: 'button add-subtask', data: { action: 'click->task-form#addForm', url: new_task_task_path(task, format: :turbo_stream), target_id: "#{dom_id(task, :new_task_form)}" } %>
+          <div class="workflow-buttons">
+            <% task.available_transitions.each do |event| %>
+              <% if event == :delegate %>
+                <%= form_with url: update_status_task_path(task), method: :post, data: { turbo_frame: dom_id(task) }, class: "workflow-form" do %>
+                  <%= hidden_field_tag :event, event %>
+                  <%= submit_tag event.to_s.humanize, class: "transition-button", data: { action: 'click->task-form#showDelegateForm' } %>
+                <% end %>
+              <% elsif event == :defer %>
+                <%= form_with url: update_status_task_path(task), method: :post, data: { turbo_frame: dom_id(task) }, class: "workflow-form" do %>
+                  <%= hidden_field_tag :event, event %>
+                  <%= submit_tag event.to_s.humanize, class: "transition-button", data: { action: 'click->task-form#showDeferForm' } %>
+                <% end %>
+              <% else %>
+                <%= form_with url: update_status_task_path(task), method: :post, data: { turbo_frame: dom_id(task) }, class: "workflow-form" do %>
+                  <%= hidden_field_tag :event, event %>
+                  <%= submit_tag event.to_s.humanize, class: "transition-button" %>
+                <% end %>
               <% end %>
             <% end %>
-          <% end %>
-        </div>
+          </div>
+        <% end %>
       <% end %>
+
     </div>
 
     <div data-inline-edit-target="formContainer" class="hidden">

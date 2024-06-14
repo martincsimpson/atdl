@@ -4,8 +4,10 @@
       <div class="project-name" data-inline-edit-target="display" data-action="dblclick->inline-edit#edit">
         <%= project.name %>
       </div>
+      <% unless local_assigns[:hide_add] %>
       <%= link_to 'Add Task', '#', class: 'button add-task', data: { action: 'click->task-form#addForm', url: new_project_task_path(project, format: :turbo_stream), target_id: "#{dom_id(project, :new_task_form)}" } %>
       <%= link_to 'Add Project', '#', class: 'button add-subproject', data: { action: 'click->project-form#addForm', url: new_project_project_path(project, format: :turbo_stream), target_id: "#{dom_id(project, :new_project_form)}" } %>
+      <% end %>
     </div>
 
     <%= turbo_frame_tag dom_id(project, :new_project_form) do %>
@@ -46,7 +48,7 @@
           <% filtered_tasks.each do |task| %>
             <tr>
               <td>
-                <%= render partial: 'tasks/task', locals: { task: task, tasks_scope: local_assigns[:tasks_scope] ? tasks_scope : nil  } %>
+                <%= render partial: 'tasks/task', locals: { task: task, tasks_scope: local_assigns[:tasks_scope], hide_add: local_assigns[:hide_add], hide_change: local_assigns[:hide_change] } %>
               </td>
             </tr>
           <% end %>
@@ -61,7 +63,7 @@
             <% if project_has_tasks?(sub_project, local_assigns[:tasks_scope] ? tasks_scope : nil) %>
               <tr>
                 <td>
-                  <%= render partial: 'projects/project', locals: { project: sub_project, tasks_scope: local_assigns[:tasks_scope] ? tasks_scope : nil } %>
+                  <%= render partial: 'projects/project', locals: { project: sub_project, tasks_scope: local_assigns[:tasks_scope], hide_add: local_assigns[:hide_add], hide_change: local_assigns[:hide_change] } %>
                 </td>
               </tr>
             <% end %>

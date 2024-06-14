@@ -7,7 +7,7 @@
   <div id="<%= dom_id(@inbox_workspace, :projects_container) %>">
     <% if @inbox_workspace.projects.any? %>
         <% @inbox_workspace.projects.each do |project| %>
-          <%= render partial: 'projects/project', locals: { project: project, tasks_scope: @tasks_scope } %>
+          <%= render partial: 'projects/project', locals: { project: project, tasks_scope: @tasks_scope, hide_add: true, hide_change: true } %>
         <% end %>
     <% end %>
   </div>
