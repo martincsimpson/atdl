@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["form"]
+  static targets = ["form", "delegateForm"]
 
   connect() {
     console.log("TaskFormController connected")
@@ -11,29 +11,29 @@ export default class extends Controller {
     event.preventDefault()
     const url = event.currentTarget.getAttribute("data-url")
     const targetId = event.currentTarget.getAttribute("data-target-id")
-    console.log("Add Form Action Triggered")
-    console.log("URL: ", url)
-    console.log("Target ID: ", targetId)
 
+    console.log("Adding form for URL: ", url)
     fetch(url, {
       headers: {
         "Accept": "text/vnd.turbo-stream.html"
       }
     })
-      .then(response => {
-        console.log("Response Status: ", response.status)
-        return response.text()
-      })
+      .then(response => response.text())
       .then(html => {
         console.log("Turbo Stream HTML received: ", html)
         const targetElement = document.getElementById(targetId)
         if (targetElement) {
-          console.log(`Inserting HTML  ${html} into target element with ID: ${targetElement}`)
+          console.log(`Inserting HTML into target element with ID: ${targetId}`)
           targetElement.innerHTML = html;
         } else {
           console.error(`Target element with ID ${targetId} not found`)
         }
       })
       .catch(error => console.error("Error fetching form: ", error))
+  }
+
+  showDelegateForm(event) {
+    event.preventDefault()
+    this.delegateFormTarget.classList.remove("hidden")
   }
 }
