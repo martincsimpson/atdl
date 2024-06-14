@@ -20,6 +20,7 @@ Rails.application.routes.draw do
     resources :tasks, only: [:new, :create], as: 'tasks', controller: 'tasks'
     member do
       post :update_status
+      patch :move
     end
     collection do 
       post :create_inbox_task

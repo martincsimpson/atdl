@@ -20,6 +20,7 @@
 
       <% if task.workflow_state != 'done' && task.workflow_state != 'dropped' %>
         <%= link_to 'Add Subtask', '#', class: 'button add-subtask', data: { action: 'click->task-form#addForm', url: new_task_task_path(task, format: :turbo_stream), target_id: "#{dom_id(task, :new_task_form)}" } %>
+        <%= link_to 'Move', '#', class: 'button move-task', data: { action: 'click->task-form#showMoveForm', url: move_task_path(task, format: :turbo_stream), target_id: "#{dom_id(task, :move_form)}" } %>
         <div class="workflow-buttons">
           <% task.available_transitions.each do |event| %>
             <% if event == :delegate %>
@@ -51,6 +52,23 @@
             <div class="actions">
               <%= form.submit "Save", data: { action: "click->inline-edit#save" } %>
               <%= button_to "Cancel", "#", data: { action: "click->inline-edit#cancel" }, method: :get %>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+
+    <!-- Move Form -->
+    <div class="move-form hidden" data-task-form-target="moveForm">
+      <%= turbo_frame_tag dom_id(task, :move_form) do %>
+        <div class="form-container">
+          <%= form_with(url: move_task_path(task), method: :patch, data: { turbo_frame: dom_id(task) }) do |form| %>
+            <div class="field">
+              <%= label_tag :new_parent_id, "Move to Project/Task" %>
+              <%= select_tag :new_parent_id, options_for_select(Project.all.collect { |p| [p.name, p.id] } + Task.all.collect { |t| [t.name, "task_#{t.id}"] }) %>
+            </div>
+            <div class="actions">
+              <%= form.submit 'Move' %>
             </div>
           <% end %>
         </div>

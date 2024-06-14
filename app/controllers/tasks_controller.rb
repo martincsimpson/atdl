@@ -3,7 +3,7 @@ class TasksController < ApplicationController
   include ApplicationHelper
 
   before_action :set_project_or_task, only: [:new, :create, :create_inbox_task]
-  before_action :set_task, only: [:show, :edit, :update, :update_status]
+  before_action :set_task, only: [:show, :edit, :update, :update_status, :move]
 
   def inbox
     @inbox_workspace = Workspace.find_by(name: 'Inbox')
@@ -148,6 +148,29 @@ class TasksController < ApplicationController
     end
   end
 
+  def move
+    new_parent_id = params[:new_parent_id]
+    if new_parent_id.present?
+      if new_parent_id.start_with?('task_')
+        @task.update(parent_task_id: new_parent_id.split('_').last, project_id: nil)
+      else
+        @task.update(project_id: new_parent_id, parent_task_id: nil)
+      end
+    end
+
+    respond_to do |format|
+      format.html { redirect_to @task, notice: 'Task was successfully moved.' }
+      format.turbo_stream do
+        render turbo_stream: turbo_stream.replace(
+          dom_id(@task),
+          partial: 'tasks/task',
+          locals: { task: @task, parent: @task.parent_task || @task.project }
+        )
+      end
+    end
+  end
+
+
   private
 
   def set_project_or_task
@@ -163,7 +186,7 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:name, :parent_task_id, :delegated_to, :snoozed_until, :deferred_reason)
+    params.require(:task).permit(:name, :parent_task_id, :delegated_to, :snoozed_until, :deferred_reason, :new_parent_id)
   end
 
   def parse_snooze_date(snooze_option)
