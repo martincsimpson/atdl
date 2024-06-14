@@ -27,6 +27,7 @@ Rails.application.routes.draw do
     end
     collection do 
       post :create_inbox_task
+      post :bulk_import
     end
   end
 

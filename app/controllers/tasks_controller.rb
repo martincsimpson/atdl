@@ -192,8 +192,43 @@ class TasksController < ApplicationController
     end
   end
 
+  def bulk_import
+    inbox_project = Project.find_by(name: 'Inbox')
+
+    task_list = params[:task_list]
+    return if task_list.blank?
+
+    tasks = parse_tasks(task_list)
+
+    create_tasks(tasks, inbox_project)
+
+    redirect_to inbox_path, notice: 'Tasks imported successfully.'
+  end
 
   private
+
+  def parse_tasks(task_list)
+    task_lines = task_list.split("\n")
+    tasks = []
+    task_lines.each do |line|
+      depth = line[/\A\s*/].size / 4
+      name = line.strip
+      tasks << { name: name, depth: depth }
+    end
+    tasks
+  end
+
+  def create_tasks(tasks, parent_project)
+    parent_stack = [{ project: parent_project, depth: -1 }]
+    tasks.each do |task|
+      while task[:depth] <= parent_stack.last[:depth]
+        parent_stack.pop
+      end
+      parent = parent_stack.last[:project]
+      new_task = parent.tasks.create(name: task[:name])
+      parent_stack.push({ project: new_task, depth: task[:depth] })
+    end
+  end
 
   def set_project_or_task
     if params[:project_id]

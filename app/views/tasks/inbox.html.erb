@@ -23,3 +23,19 @@
     </div>
   <% end %>
 <% end %>
+
+<!-- Bulk Import Form -->
+<h3>Bulk Import</h3>
+<%= form_with url: bulk_import_tasks_path, method: :post do %>
+  <div class="field">
+    <textarea name="task_list" rows="10" cols="50" placeholder="- Task 1
+    - Subtask of task 1
+- Task 2
+- Task 3
+    - Subtask of task 3
+        - Subtask of subtask of task 3"></textarea>
+  </div>
+  <div class="actions">
+    <%= submit_tag 'Import Tasks' %>
+  </div>
+<% end %>

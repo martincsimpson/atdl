@@ -5,8 +5,8 @@
         <%= project.name %>
       </div>
       <% unless local_assigns[:hide_add] %>
-      <%= link_to 'Add Task', '#', class: 'button add-task', data: { action: 'click->task-form#addForm', url: new_project_task_path(project, format: :turbo_stream), target_id: "#{dom_id(project, :new_task_form)}" } %>
-      <%= link_to 'Add Project', '#', class: 'button add-subproject', data: { action: 'click->project-form#addForm', url: new_project_project_path(project, format: :turbo_stream), target_id: "#{dom_id(project, :new_project_form)}" } %>
+        <%= link_to 'Add Task', '#', class: 'button add-task', data: { action: 'click->task-form#addForm', url: new_project_task_path(project, format: :turbo_stream), target_id: "#{dom_id(project, :new_task_form)}" } %>
+        <%= link_to 'Add Project', '#', class: 'button add-subproject', data: { action: 'click->project-form#addForm', url: new_project_project_path(project, format: :turbo_stream), target_id: "#{dom_id(project, :new_project_form)}" } %>
       <% end %>
     </div>
 
@@ -15,7 +15,7 @@
         <!-- This is where the new subproject form will be inserted -->
       </div>
     <% end %>
-    
+
     <%= turbo_frame_tag dom_id(project, :new_task_form) do %>
       <div class="form-container">
         <!-- This is where the new task form will be inserted -->
