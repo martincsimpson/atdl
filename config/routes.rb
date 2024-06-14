@@ -21,6 +21,9 @@ Rails.application.routes.draw do
     member do
       post :update_status
     end
+    collection do 
+      post :create_inbox_task
+    end
   end
 
   resources :recurring_tasks, only: [:index, :new, :create, :edit, :update, :destroy] do

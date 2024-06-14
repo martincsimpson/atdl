@@ -2,11 +2,44 @@ class TasksController < ApplicationController
   include ActionView::RecordIdentifier
   include ApplicationHelper
 
-  before_action :set_project_or_task, only: [:new, :create]
+  before_action :set_project_or_task, only: [:new, :create, :create_inbox_task]
   before_action :set_task, only: [:show, :edit, :update, :update_status]
 
   def inbox
-    @tasks = Task.where(workflow_state: nil)
+    @inbox_workspace = Workspace.find_by(name: 'Inbox')
+    if @inbox_workspace
+      @inbox_project = @inbox_workspace.projects.find_by(name: 'Inbox')
+      if @inbox_project
+        @tasks = @inbox_project.tasks.where(workflow_state: nil)
+      else
+        @tasks = Task.none # No tasks if the project does not exist
+      end
+    else
+      @tasks = Task.none # No tasks if the workspace does not exist
+    end
+  end
+
+  def create_inbox_task
+    inbox_workspace = Workspace.find_by(name: 'Inbox')
+    if inbox_workspace
+      inbox_project = inbox_workspace.projects.find_by(name: 'Inbox')
+      @task = inbox_project.tasks.build(task_params)
+      if @task.save
+        respond_to do |format|
+          format.turbo_stream do
+            render turbo_stream: turbo_stream.replace(
+              dom_id(inbox_workspace, :projects_container),
+              partial: 'projects/project',
+              locals: { project: inbox_project, tasks_scope: nil }
+            )    
+          end
+        end
+      else
+        respond_to do |format|
+          format.turbo_stream
+        end
+      end
+    end
   end
 
   def today

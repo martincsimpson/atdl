@@ -2,16 +2,24 @@
 
 <p> This page is for any tasks that are currently unassigned.</p>
 
-<% if @tasks.any? %>
-  <table class="task-table">
-    <% @tasks.each do |task| %>
-      <tr>
-        <td>
-          <%= render partial: 'tasks/task', locals: { task: task } %>
-        </td>
-      </tr>
+<div class="workspace" id="<%= dom_id(@inbox_workspace) %>">
+  <h2><%= @inbox_workspace.name %></h2>
+  <div id="<%= dom_id(@inbox_workspace, :projects_container) %>">
+    <% if @inbox_workspace.projects.any? %>
+        <% @inbox_workspace.projects.each do |project| %>
+          <%= render partial: 'projects/project', locals: { project: project, tasks_scope: @tasks_scope } %>
+        <% end %>
     <% end %>
-  </table>
-<% else %>
-  <p>No new tasks.</p>
+  </div>
+</div>
+
+<%= turbo_frame_tag 'new_inbox_task' do %>
+  <%= form_with model: [@inbox_project, Task.new], url: create_inbox_task_tasks_path, data: { turbo_frame: dom_id(@inbox_workspace, :projects_container) } do |form| %>
+    <div class="field">
+      <%= form.text_field :name, placeholder: "New Task" %>
+    </div>
+    <div class="actions">
+      <%= form.submit 'Add Task' %>
+    </div>
+  <% end %>
 <% end %>
