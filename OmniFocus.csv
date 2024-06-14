@@ -1,0 +1,242 @@
+Task ID,Type,Name,Status,Project,Context,Start Date,Due Date,Completion Date,Duration,Flagged,Notes,Tags
+1,Project,VCB - Operational,active,,,,,,,0,,
+1.1,Action,Signed Contract PH4,,VCB - Operational,Waiting,,,,,0,,Waiting
+1.2,Action,"Review slack, confluence, jira licences and delete users",,VCB - Operational,Waiting,,,,,1,,Waiting
+2,Project,Unsorted,active,,,,,,,0,,
+2.1,Action,VN Leads,,Unsorted,Waiting,,,,,0,,Waiting
+2.2,Action,Expand collaboration with BCG (talk with Colin),,Unsorted,Waiting,,,,,0,,Waiting
+3,Project,Adaptivity - BBUK,active,,,,,,,0,,
+3.1,Action,"Meeting with P Keng, Jack, Martin",,Adaptivity - BBUK,To Follow Up,,,,,0,,To Follow Up
+3.2,Action,Meeting with P Tid + Above,,Adaptivity - BBUK,Waiting,,,,,0,,Waiting
+4,Project,BBVN,active,,,,,,,0,,
+4.1,Action,LVP Bank,,BBVN,Soon,2024-06-13 17:00:00 +0000,,,,0,,Soon
+5,Project,InnovestX,active,,,,,,,0,,
+5.1,Action,Setup EDNA Q&A,,InnovestX,To Follow Up,,,,,1,,To Follow Up
+5.2,Action,Resource for K Thor,,InnovestX,To Follow Up,,,,,1,,"To Follow Up, Urgent"
+5.2.1,Action,Discuss with P Top,,InnovestX,To Follow Up,,,,,0,,"To Follow Up, Urgent"
+5.3,Action,Complete the Demo Setup,,InnovestX,To Follow Up,,,,,1,,To Follow Up
+5.4,Action,Complete the Perf Test,,InnovestX,To Follow Up,,,,,1,,To Follow Up
+6,Project,VTB,active,,,,,,,0,,
+6.1,Action,Fast Start,,VTB,,,,,,0,,
+6.1.1,Action,Onboarding Discussion with all resources,,VTB,,,,,,0,,
+6.1.2,Action,Get Confirmation of start date w/verbal or written approval,,VTB,Urgent,,,,,1,,Urgent
+6.1.3,Action,"Organise resource count + list (need PM help?) [top, p pong]",,VTB,Urgent,,,,,1,,Urgent
+6.1.4,Action,Add our IP to the whitelist,,VTB,,,,,,0,,
+6.1.5,Action,Figure out how to get paid,,VTB,Urgent,,,,,1,,Urgent
+6.1.6,Action,Get Requirements,,VTB,,,,,,1,,
+6.1.6.1,Action,Security requirements,,VTB,,,,,,0,,
+6.1.6.2,Action,API Secifications,,VTB,,,,,,0,,
+6.1.6.3,Action,Test Environment Information,,VTB,,,,,,0,,
+6.2,Action,RFP - Submit new proposal with changes requested by Mr Lan,,VTB,Urgent,,,,,1,,Urgent
+6.2.1,Action,Incorporate questions from Mr Lan,,VTB,,,,,,0,,
+6.2.2,Action,Incorporate feedback from Ms Hasel,,VTB,,,,,,0,,
+6.2.3,Action,"Include scope limitiations (such as deliverables, timings, responsibilities)",,VTB,,,,,,0,,
+6.2.4,Action,Commitment from VTB that legacy systems will not impact our project,,VTB,,,,,,0,,
+6.2.5,Action,"Update number of resources (to allow for budget reduction & protecting us, should be more than 50% VTB)",,VTB,,,,,,0,,
+6.2.6,Action,"Let them know this scope is limited time only, must start within august",,VTB,,,,,,0,,
+6.3,Action,Start work on the main contract,,VTB,,,,,,1,,
+6.4,Action,Let Mr Lan meet K Sihanna Lamsam from K Mobile Banking if necessary,,VTB,,,,,,0,,
+6.5,Action,Resource Orgniaisation ,,VTB,,,,,,1,,
+6.5.1,Action,P Earth (2 people),,VTB,,,,,,0,,
+6.5.2,Action,Resource Organisation P Pong (BA / SA),,VTB,Urgent,,,,,0,,Urgent
+6.5.3,Action,Resource Organisation Panya (BA / SA),,VTB,Urgent,,,,,0,,Urgent
+6.5.4,Action,Resource Organisation  HR for our staff,,VTB,Urgent,,,,,0,,Urgent
+7,Project,VCB Ph5,active,,,,,,,0,,
+7.1,Action,Review and update slide deck and submit to Colin,,VCB Ph5,Urgent,,,,,1,,Urgent
+7.2,Action,Martin to meet in Hanoi with Ms Nyueng + Henry,,VCB Ph5,Urgent,,,,,1,,Urgent
+7.3,Action,Henry to Deliver Message to working team,,VCB Ph5,Urgent,,,,,1,,Urgent
+8,Project,Chandra Asri,active,,,,,,,0,,
+8.1,Action,They will get back to us in 4 weeks,,Chandra Asri,,2024-07-04 17:00:00 +0000,,,,0,,
+9,Project,SCB - Azure Migration,active,,,,,,,0,,
+9.1,Action,Waiting for them to feedback to us,,SCB - Azure Migration,,,,,,0,,
+10,Project,SCB - GitHub Migration,active,,,,,,,0,,
+10.1,Action,Rework Deck + Present Thursday,,SCB - GitHub Migration,Urgent,,,,,0,,Urgent
+10.2,Action,Get Top to review Deck,,SCB - GitHub Migration,Urgent,,,,,0,,Urgent
+10.3,Action,Get Feedback from Top's team about how to make it more detailed,,SCB - GitHub Migration,Urgent,,,,,0,,Urgent
+11,Project,SCB - Nerve Center,active,,,,,,,0,,
+11.1,Action,Waiting for meeting / discussion with team,,SCB - Nerve Center,To Follow Up,,,,,0,,To Follow Up
+11.2,Action,Prepare using link in SCBX Tech group for the Q&A https://bluebikgroupoutlookcom.sharepoint.com/:x:/r/sites/SCBxTechNerveCenter/Shared%20Documents/General/01-Working%20File/SCBX%20Project%20Questionnaires.xlsx?d=wc779ae2932574c56ba21c877e846c506&csf=1&web=1&e=29WiZK,,SCB - Nerve Center,To Follow Up,,,,,0,,To Follow Up
+12,Project,SCB - DataX,active,,,,,,,0,,
+12.1,Action,Rework Deck with P Pop,,SCB - DataX,Urgent,,,,,1,"DataX Notes:
+
+- Insights generation
+- Data Broker
+- experience with PMO
+- They have PMO, they need strategic pmo
+- overall vision in data monetization strategy
+- Data Governance standards
+- HOw to convince the subsidiaries
+- Talk about Pat (good will) how she worked with INVX
+
+""What would the subsiriaries pay for, and why?""
+    -> And how can they not do it themselves
+    -> Should be quick wins
+    
+Plan:
+    - Convince them based on experience
+    - PResent use cases
+    - 
+    
+Next Steps:
+    - Implement use cases
+    - Get Started",Urgent
+12.2,Action,Meeting with K Somkiat & TT,,SCB - DataX,Within 1 week,,,,,1,"DataX Notes:
+
+- Insights generation
+- Data Broker
+- experience with PMO
+- They have PMO, they need strategic pmo
+- overall vision in data monetization strategy
+- Data Governance standards
+- HOw to convince the subsidiaries
+- Talk about Pat (good will) how she worked with INVX
+
+""What would the subsiriaries pay for, and why?""
+    -> And how can they not do it themselves
+    -> Should be quick wins
+    
+Plan:
+    - Convince them based on experience
+    - PResent use cases
+    - 
+    
+Next Steps:
+    - Implement use cases
+    - Get Started",Within 1 week
+13,Project,KKP,active,,,,,,,0,,
+13.1,Action,Demo for EDNA,,KKP,To Follow Up,,,,,0,,To Follow Up
+14,Project,BBG - Finance,active,,,,,,,0,,
+15,Project,BBG - Corporate Structure,active,,,,,,,0,,
+15.1,Action,Foreign Office Setup,,BBG - Corporate Structure,,,,,,0,,
+15.1.1,Action,Subcontracting Agreements Setup,,BBG - Corporate Structure,,,,,,0,,
+15.1.2,Action,HK Office,,BBG - Corporate Structure,,,,,,0,,
+15.1.2.1,Action,Incorporation,,BBG - Corporate Structure,,,,,,0,,
+15.1.2.2,Action,Tax Advsior / Legal Advisor,,BBG - Corporate Structure,,,,,,0,,
+15.1.3,Action,UK office,,BBG - Corporate Structure,,,,,,0,,
+15.1.3.1,Action,Revise Incorporation,,BBG - Corporate Structure,,,,,,0,,
+15.1.3.2,Action,Tax Advisor / Legal Advisor,,BBG - Corporate Structure,,,,,,0,,
+15.2,Action,BBG Expansion - Saudi Arabia,,BBG - Corporate Structure,Parked,,,,,0,,Parked
+15.3,Action,BBG Expansion - Phillipines,,BBG - Corporate Structure,Parked,,,,,0,,Parked
+15.4,Action,BBG Expansion - Malaysia,,BBG - Corporate Structure,Parked,,,,,0,,Parked
+15.5,Action,BBG Expansion - Indonesia (talk with Boat Friend),,BBG - Corporate Structure,Parked,,,,,0,,Parked
+15.6,Action,[global] Nitish share transfer & discussion,,BBG - Corporate Structure,Waiting,,,,,0,"- Minimum relinquish 5%
+- Can give salary bump up to 10%
+- Earned leave is easier to use & ill allow the carryover
+- Stays the country head & cotinue with BD activities including in Vietnam
+- Final responsibilities and transition",Waiting
+16,Project,BBG - People,active,,,,,,,0,,
+16.1,Action,[global] Evaluate Kate and Henry,,BBG - People,Soon,,,,,1,,Soon
+17,Project,BBG - Operational,active,,,,,,,0,,
+17.1,Action,SOPs and Policies,,BBG - Operational,Parked,,,,,0,,Parked
+17.1.1,Action,New Project (Sprint 0) Checklist & Policy,,BBG - Operational,Parked,,,,,0,,Parked
+17.1.2,Action,Iteration of Project,,BBG - Operational,Parked,,,,,0,,Parked
+17.1.3,Action,Closure of Project,,BBG - Operational,Parked,,,,,0,,Parked
+17.2,Action,BD Farming using Microsoft's client list,,BBG - Operational,Parked,,,,,1,,Parked
+17.3,Action,Talk to MSFT about US cooperation,,BBG - Operational,Parked,,,,,0,,Parked
+17.4,Action,[global] Shut down Azure machiens,,BBG - Operational,Soon,,,,,0,,Soon
+17.5,Action,Decide whether MSFT is right partner (Call with Brendon + Top),,BBG - Operational,Within 1 week,,,,,1,"Questions for Brendon
+    1. Our primary goals is to become partners with Microsoft to the point where it positively impacts our Lead Generations
+    2. We will accomplish this via GItHub, service offerings and licence offerings
+    3. Is this the right direction, and is the end goal sensible?",Within 1 week
+18,Project,BBG - EDNA,active,,,,,,,0,,
+18.1,Action,[global] EDNA SaaS,,BBG - EDNA,Parked,,,,,0,,Parked
+18.2,Action,[global] EDNA (FE+BE) product page / website / pricing / SaaS,,BBG - EDNA,,,,,,0,,
+18.3,Action,[global] EDNA Compendium,,BBG - EDNA,Soon,,,,,0,,Soon
+18.3.1,Action,[EDNA] Resources,,BBG - EDNA,Soon,,,,,0,,Soon
+18.3.2,Action,[EDNA] Operational Model / Bring it to a real proejct,,BBG - EDNA,Soon,,,,,0,,Soon
+18.3.3,Action,[EDNA] Local server business case,,BBG - EDNA,Soon,,,,,0,,Soon
+18.3.4,Action,[EDNA] EDNA chargeback model,,BBG - EDNA,Soon,,,,,0,,Soon
+19,Project,Personal - Learning,active,,,,,,,0,,
+19.1,Action,Golang,,Personal - Learning,Parked,,,,,0,,Parked
+19.2,Action,Functional Programming,,Personal - Learning,Parked,,,,,0,,Parked
+19.3,Action,Teach Vee,,Personal - Learning,Parked,,,,,0,,Parked
+19.4,Action,[personal] Take MBA,,Personal - Learning,Parked,,,,,0,,Parked
+20,Project,Personal - General,active,,,,,,,0,,
+20.1,Action,Buy Vee & Aoun Birthday Present,,Personal - General,Urgent,,,,,1,"- Vees present
+    - Apple Watch
+    - Sulwhasoo voucher
+    - Rally Experience",Urgent
+21,Project,Personal - Fun,active,,,,,,,0,,
+21.1,Action,Dubai Trip,,Personal - Fun,Parked,,,,,0,,Parked
+21.2,Action,Jordan Trip,,Personal - Fun,Parked,,,,,0,,Parked
+21.3,Action,Hong Kong Trip,,Personal - Fun,Parked,,,,,0,,Parked
+21.4,Action,Vee Stylist / Makeup Artist,,Personal - Fun,Parked,,,,,0,,Parked
+21.5,Action,Read more books,,Personal - Fun,Parked,,,,,0,,Parked
+21.6,Action,Flying Licence,,Personal - Fun,Parked,,,,,0,,Parked
+22,Project,Personal - House,active,,,,,,,0,,
+22.1,Action,Garden,,Personal - House,,,,,,0,,
+22.1.1,Action,Sala + Fans,,Personal - House,,,,,,0,,
+22.1.2,Action,Path + Lights,,Personal - House,,,,,,0,,
+22.1.3,Action,Sprinkler system?,,Personal - House,,,,,,0,,
+22.2,Action,Kitchen,,Personal - House,,,,,,0,,
+22.2.1,Action,Water dispenser,,Personal - House,,,,,,0,,
+22.2.2,Action,Flat top grill,,Personal - House,,,,,,0,,
+22.2.3,Action,Gas Grill,,Personal - House,,,,,,0,,
+22.2.4,Action,Pizza oven ,,Personal - House,,,,,,0,,
+22.2.5,Action,Sink,,Personal - House,,,,,,0,,
+22.2.6,Action,Work surface ,,Personal - House,,,,,,0,,
+22.2.7,Action,Chinese wok,,Personal - House,,,,,,0,,
+22.2.8,Action,Smoker,,Personal - House,,,,,,0,,
+22.2.9,Action,BBQ,,Personal - House,,,,,,0,,
+22.3,Action,Bedroom,,Personal - House,,,,,,0,,
+22.3.1,Action,Bedside Lamps,,Personal - House,,,,,,0,,
+22.4,Action,Servers,,Personal - House,,,,,,0,,
+22.4.1,Action,Cooking Equipment,,Personal - House,,,,,,0,,
+22.4.1.1,Action,Good knives,,Personal - House,,,,,,0,,
+22.4.1.2,Action,Good pans,,Personal - House,,,,,,0,,
+22.4.1.3,Action,Stainless steel wok,,Personal - House,,,,,,0,,
+22.4.1.4,Action,Wok burner,,Personal - House,,,,,,0,,
+22.4.1.5,Action,Dual Oven,,Personal - House,,,,,,0,,
+22.4.1.6,Action,Outside Kitchen,,Personal - House,,,,,,0,,
+22.4.1.7,Action,Smoker,,Personal - House,,,,,,0,,
+22.4.1.8,Action,Slow cooker,,Personal - House,,,,,,0,,
+22.4.1.9,Action,Pizza oven ,,Personal - House,,,,,,0,,
+22.5,Action,Smart Home,,Personal - House,,,,,,0,,
+22.5.1,Action,Switches,,Personal - House,,,,,,0,,
+22.5.2,Action,Make sure has a conduit to go to out-buildings as well such as parents house + guest houses,,Personal - House,,,,,,0,,
+22.5.3,Action,Motion sensors,,Personal - House,,,,,,0,,
+22.5.4,Action,Zwave,,Personal - House,,,,,,0,,
+22.5.5,Action,Ambient light sensors to turn on/off lights,,Personal - House,,,,,,0,,
+22.5.6,Action,Air temperature / moisture senors,,Personal - House,,,,,,0,,
+22.6,Action,Buy Rug,,Personal - House,,,,,,0,,
+22.7,Action,Smoke Alarms,,Personal - House,Soon,,,,,1,,Soon
+22.8,Action,Buy Land upcountry,,Personal - House,,,,,,0,,
+22.9,Action,[personal] buy tesla ,,Personal - House,,,,,,0,,
+22.10,Action,[personal] lights above bed / dining room table ,,Personal - House,,,,,,0,,
+23,Project,Personal - Health,active,,,,,,,0,,
+23.1,Action,Toys,,Personal - Health,,,,,,0,,
+23.2,Action,Bump on arm and head checked out ,,Personal - Health,,,,,,1,,
+23.3,Action,[personal] Martin and vee health check ,,Personal - Health,,,,,,0,,
+23.4,Action,Take mother to India for teeth,,Personal - Health,Parked,,,,,0,,Parked
+23.5,Action,Stop taking melatonin,,Personal - Health,Soon,,,,,0,,Soon
+23.6,Action,Call hospital to stop PPI,,Personal - Health,Soon,,,,,0,,Soon
+23.7,Action,Buy food for Sunday,,Personal - Health,Within 1 week,,,,,0,,Within 1 week
+24,Project,Personal - Ideas,active,,,,,,,0,,
+24.1,Action,Kanguru,,Personal - Ideas,,,,,,0,,
+24.2,Action,Club Secret (build),,Personal - Ideas,,,,,,0,,
+24.3,Action,Newsly,,Personal - Ideas,,,,,,0,,
+24.4,Action,Speed Dating,,Personal - Ideas,,,,,,0,,
+24.5,Action,Home Cook,,Personal - Ideas,,,,,,0,,
+24.6,Action,MSA,,Personal - Ideas,,,,,,0,,
+24.7,Action,HFC,,Personal - Ideas,,,,,,0,,
+25,Project,Personal - Admin,active,,,,,,,0,,
+25.1,Action,[simco] Shutdown Simco,,Personal - Admin,,,,,,1,,
+25.1.1,Action,[simco] Pay BVI Accountants,,Personal - Admin,,,,,,0,,
+25.1.2,Action,[simco] Get FS for Jan1 2023 -> Dec31 2023,,Personal - Admin,,,,,,0,,
+25.1.3,Action,[simco] Submit ES Reporting Forms & FS,,Personal - Admin,,,,,,0,,
+25.1.4,Action,[simco] Wait for company to be struck off,,Personal - Admin,,,,,,0,,
+25.2,Action,[therrr] Ensure shutdown,,Personal - Admin,,,,,,1,,
+25.3,Action,[soltech] Remove myself from soltech,,Personal - Admin,,,,,,1,,
+25.4,Action,[uk tax] Investigate if any potential issues,,Personal - Admin,,,,,,1,,
+25.5,Action,Rebuild CV using ChatGPT 4o,,Personal - Admin,,,,,,1,,
+25.6,Action,Talk to recruiters for new jobs,,Personal - Admin,,,,,,1,,
+25.7,Action,Insurance,,Personal - Admin,,,,,,0,,
+25.7.1,Action,House Insurance,,Personal - Admin,,,,,,0,,
+25.7.2,Action,Contents Insurance,,Personal - Admin,,,,,,0,,
+25.7.3,Action,Family Health Insurance,,Personal - Admin,,,,,,1,,
+25.7.4,Action,Get Rabies vaccine,,Personal - Admin,,,,,,0,,
+25.8,Action,[personal] Get Thai Driving licence,,Personal - Admin,,,,,,1,,
+25.9,Action,Permanent Residency / Citizenship,,Personal - Admin,,,,,,0,,
+25.10,Action,Clear office Room Boxes,,Personal - Admin,,,,,,0,,
+25.11,Action,Create Houshold Budget,,Personal - Admin,,,,,,1,,
+25.12,Action,Contact hotel and namaste for VAT receipts,,Personal - Admin,Soon,,,,,0,,Soon
