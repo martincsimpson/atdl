@@ -43,13 +43,13 @@ class TasksController < ApplicationController
   end
 
   def today
-    @tasks_scope = Task.where('(snoozed_until IS NULL OR snoozed_until <= ?) AND workflow_state NOT IN (?, ?)', Date.today, 'done', 'dropped')
+    @tasks_scope = Task.due_today
     @workspaces = Workspace.includes(projects: { tasks: :tasks }).all
     @recurring_tasks = RecurringTask.all.select { |r| r.scheduled_today? && !r.done_for_today? }
   end
 
   def review
-    @tasks_scope = Task.where('(snoozed_until IS NULL OR snoozed_until <= ?) AND workflow_state NOT IN (?, ?)', Date.today, 'done', 'dropped')
+    @tasks_scope = Task.for_review
     @workspaces = Workspace.includes(projects: { tasks: :tasks }).all
   end
 

@@ -2,24 +2,12 @@
 
 <p> This page is for tasks that need to be done, or reviewed today </p>
 
-<% if @workspaces.any? %>
-  <% @workspaces.each do |workspace| %>
-    <div class="workspace" id="<%= dom_id(workspace) %>">
-      <h2><%= workspace.name %></h2>
-      <div id="<%= dom_id(workspace, :projects_container) %>">
-        <% if workspace.projects.any? %>
-          <ul>
-            <% workspace.projects.each do |project| %>
-              <%= render partial: 'projects/project', locals: { project: project, tasks_scope: @tasks_scope } %>
-            <% end %>
-          </ul>
-        <% end %>
-      </div>
-    </div>
+<% @workspaces.each do |workspace| %>
+  <% if workspace.has_atleast_one_task_for(:today) %>
+    <%= render partial: 'workspaces/workspace', locals: { workspace: workspace, tasks_scope: @tasks_scope } %>
   <% end %>
-<% else %>
-  <p>No tasks for today.</p>
 <% end %>
+
 
 <div class="recurring_tasks">
   <h2>Recurring Tasks</h2>

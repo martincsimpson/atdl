@@ -3,4 +3,16 @@ class Project < ApplicationRecord
   has_many :tasks, dependent: :destroy
   has_many :projects, class_name: "Project", foreign_key: "parent_project_id", dependent: :destroy
   belongs_to :parent_project, class_name: "Project", optional: true
+
+  def has_atleast_one_task_for(scope)
+    case scope
+    when :today
+      tasks.due_today.exists? || projects.any? { |sub_project| sub_project.has_atleast_one_task_for(scope) }
+    when :review
+      tasks.for_review.exists? || projects.any? { |sub_project| sub_project.has_atleast_one_task_for(scope) }
+    else
+      false
+    end
+  end
+
 end
