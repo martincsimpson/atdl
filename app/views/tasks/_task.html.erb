@@ -18,6 +18,9 @@
         <% end %>
       </div>
 
+      <% if task.flagged %>
+      TASK IS flagged
+      <% end %>
       <%= link_to 'Move', '#', class: 'button move-task', data: { action: 'click->task-form#showMoveForm', url: move_task_path(task, format: :turbo_stream), target_id: "#{dom_id(task, :move_form)}" } %>
 
       <% unless local_assigns[:hide_change] %>
