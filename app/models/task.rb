@@ -6,11 +6,11 @@ class Task < ApplicationRecord
   include Workflow
 
   scope :due_today, -> {
-    where('(snoozed_until IS NULL OR snoozed_until <= ?) AND (workflow_state IS NULL OR workflow_state NOT IN (?, ?))', Date.today, 'done', 'dropped')
+    where('(snoozed_until IS NULL OR snoozed_until::date <= ?) AND (workflow_state IS NULL OR workflow_state NOT IN (?, ?))', Date.today, 'done', 'dropped')
   }
 
   scope :for_review, -> {
-    where('snoozed_until IS NOT NULL AND snoozed_until > ? AND workflow_state NOT IN (?, ?)', Date.today, 'done', 'dropped')
+    where('snoozed_until IS NOT NULL AND snoozed_until::date > ? AND workflow_state NOT IN (?, ?)', Date.today, 'done', 'dropped')
   }
 
   workflow do
