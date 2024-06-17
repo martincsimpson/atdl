@@ -36,6 +36,7 @@ Rails.application.routes.draw do
   resources :recurring_tasks, only: [:index, :new, :create, :edit, :update, :destroy] do
     member do
       post 'mark_done'
+      post 'mark_failed'
     end
   end
 

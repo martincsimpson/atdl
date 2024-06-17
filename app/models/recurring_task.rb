@@ -22,10 +22,17 @@ class RecurringTask < ApplicationRecord
     log[Date.today.to_s] = true
     save
   end
+
+  def failed_for_today!
+    initialize_log
+    log[Date.today.to_s] = false
+    save
+  end
+
   
   # Check if the task was done for today
-  def done_for_today?
+  def complete_for_today?
     initialize_log
-    log[Date.today.to_s] == true
+    !log[Date.today.to_s].nil?
   end
 end

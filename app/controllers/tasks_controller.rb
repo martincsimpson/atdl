@@ -45,7 +45,7 @@ class TasksController < ApplicationController
   def today
     @tasks_scope = :today
     @workspaces = Workspace.includes(projects: { tasks: :tasks }).all
-    @recurring_tasks = RecurringTask.all.select { |r| r.scheduled_today? && !r.done_for_today? }
+    @recurring_tasks = RecurringTask.all.select { |r| r.scheduled_today? && !r.complete_for_today? }
   end
 
   def review

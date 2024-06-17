@@ -24,6 +24,7 @@ class Task < ApplicationRecord
     end
     state :deferred do
       event :complete, transitions_to: :done
+      event :delegate, transitions_to: :delegate
       event :defer, transitions_to: :deferred
       event :drop, transitions_to: :dropped
     end
