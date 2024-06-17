@@ -37,39 +37,27 @@
     </div>
 
     <%= turbo_frame_tag dom_id(project, :tasks_container) do %>
-      <% if local_assigns[:tasks_scope] %>
-        <% filtered_tasks = project.tasks.where(id: tasks_scope.ids) %>
-      <% else %>
-        <% filtered_tasks = project.tasks %>
-      <% end %>
-
-      <% if filtered_tasks.any? %>
-        <table class="task-table">
-          <% filtered_tasks.each do |task| %>
-            <tr>
-              <td>
-                <%= render partial: 'tasks/task', locals: { task: task, tasks_scope: local_assigns[:tasks_scope], hide_add: local_assigns[:hide_add], hide_change: local_assigns[:hide_change] } %>
-              </td>
-            </tr>
-          <% end %>
-        </table>
-      <% end %>
+      <table class="task-table">
+        <% project.tasks_or_subtasks_matching(local_assigns[:tasks_scope]).each do |task| %>
+          <tr>
+            <td>
+              <%= render partial: 'tasks/task', locals: { task: task, tasks_scope: local_assigns[:tasks_scope], hide_add: local_assigns[:hide_add], hide_change: local_assigns[:hide_change] } %>
+            </td>
+          </tr>
+        <% end %>
+      </table>
     <% end %>
 
     <%= turbo_frame_tag dom_id(project, :projects_container) do %>
-      <% if project.projects.any? %>
-        <table class="project-table">
-          <% project.projects.each do |sub_project| %>
-            <% if project_has_tasks?(sub_project, local_assigns[:tasks_scope] ? tasks_scope : nil) %>
-              <tr>
-                <td>
-                  <%= render partial: 'projects/project', locals: { project: sub_project, tasks_scope: local_assigns[:tasks_scope], hide_add: local_assigns[:hide_add], hide_change: local_assigns[:hide_change] } %>
-                </td>
-              </tr>
-            <% end %>
-          <% end %>
-        </table>
-      <% end %>
+      <table class="project-table">
+        <% project.projects.select { |p| p.any_task_matching?(local_assigns[:tasks_scope]) }.each do |sub_project| %>
+          <tr>
+            <td>
+              <%= render partial: 'projects/project', locals: { project: sub_project, tasks_scope: local_assigns[:tasks_scope], hide_add: local_assigns[:hide_add], hide_change: local_assigns[:hide_change] } %>
+            </td>
+          </tr>
+        <% end %>
+      </table>
     <% end %>
   </div>
 <% end %>

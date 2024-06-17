@@ -12,7 +12,7 @@
     <% if workspace.projects.any? %>
       <ul>
         <% workspace.projects.each do |project| %>
-          <% if project_has_tasks?(project, tasks_scope) %>
+          <% if project.any_task_matching?(local_assigns[:tasks_scope]) %>
             <li>
               <%= render partial: 'projects/project', locals: { project: project, tasks_scope: tasks_scope } %>
             </li>

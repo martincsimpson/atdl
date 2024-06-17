@@ -5,14 +5,6 @@ class Task < ApplicationRecord
 
   include Workflow
 
-  scope :due_today, -> {
-    where('(snoozed_until IS NULL OR snoozed_until::date <= ?) AND (workflow_state IS NULL OR workflow_state NOT IN (?, ?))', Date.today, 'done', 'dropped')
-  }
-
-  scope :for_review, -> {
-    where('snoozed_until IS NOT NULL AND snoozed_until::date > ? AND workflow_state NOT IN (?, ?)', Date.today, 'done', 'dropped')
-  }
-
   workflow do
     state :new do
       event :start_todo, transitions_to: :todo
@@ -71,14 +63,28 @@ class Task < ApplicationRecord
     self.parent.parent_string + " - #{self.name}"
   end
 
-  def has_atleast_one_sub_task_for(scope)
+  # Checks to see if we are relevant, or we have any subtasks that are relevant
+  def any_task_matching?(scope)
+    matches_scope?(scope) || tasks.any? { |sub_task| sub_task.any_task_matching?(scope) }
+  end
+
+  # Gets a list of tasks that are either relevant or have children that are relevant
+  def tasks_or_subtasks_matching(scope)
+    tasks.select { |t| t.matches_scope?(scope) or t.tasks_or_subtasks_matching(scope).any? }
+  end
+
+  def matches_scope?(scope)
     case scope
     when :today
-      tasks.due_today.exists? || tasks.any? { |sub_task| sub_task.has_atleast_one_sub_task_for(scope) }
+      return true if snoozed_until.nil? && current_state != 'done' && current_state != 'dropped'
+      return false if current_state == 'done' || current_state == 'dropped'
+      return true if snoozed_until.to_date <= Date.today
     when :review
-      tasks.for_review.exists? || tasks.any? { |sub_task| sub_task.has_atleast_one_sub_task_for(scope) }
+      return false if snoozed_until.nil? || current_state == 'done' || current_state == 'dropped'
+      return true if snoozed_until.to_date > Date.today
     else
-      false
+      return true
     end
   end
+
 end

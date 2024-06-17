@@ -1,8 +1,8 @@
 class Workspace < ApplicationRecord
   has_many :projects, dependent: :destroy
 
-  def has_atleast_one_task_for(scope)
-    projects.any? { |project| project.has_atleast_one_task_for(scope) }
+  def any_task_matching?(scope)
+    projects.any? { |sub_project| sub_project.any_task_matching?(scope) }
   end
 
   def parent_string

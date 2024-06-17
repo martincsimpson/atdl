@@ -3,7 +3,7 @@
 <p> This page is to review tasks that are either deferred, or delegated </p>
 
 <% @workspaces.each do |workspace| %>
-  <% if workspace.has_atleast_one_task_for(:review) %>
+  <% if workspace.any_task_matching?(:review) %>
     <%= render partial: 'workspaces/workspace', locals: { workspace: workspace, tasks_scope: @tasks_scope } %>
   <% end %>
 <% end %>

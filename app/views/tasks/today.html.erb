@@ -3,7 +3,7 @@
 <p> This page is for tasks that need to be done, or reviewed today </p>
 
 <% @workspaces.each do |workspace| %>
-  <% if workspace.has_atleast_one_task_for(:today) %>
+  <% if workspace.any_task_matching?(:today) %>
     <%= render partial: 'workspaces/workspace', locals: { workspace: workspace, tasks_scope: @tasks_scope } %>
   <% end %>
 <% end %>
