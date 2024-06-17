@@ -11,7 +11,10 @@ class RecurringTasksController < ApplicationController
   end
 
   def create
-    @recurring_task = RecurringTask.new(recurring_task_params)
+    @recurring_task = RecurringTask.new
+    @recurring_task.name = params[:recurring_task][:name]
+    @recurring_task.schedule = params[:recurring_task][:schedule].reject(&:empty?).join(",")
+
     if @recurring_task.save
       redirect_to recurring_tasks_path, notice: 'Recurring task was successfully created.'
     else
@@ -40,7 +43,9 @@ class RecurringTasksController < ApplicationController
   end
 
   def update
-    if @recurring_task.update(recurring_task_params)
+    @recurring_task.name = params[:recurring_task][:name]
+    @recurring_task.schedule = params[:recurring_task][:schedule].reject(&:empty?).join(",")
+    if @recurring_task.save
       redirect_to recurring_tasks_path, notice: 'Recurring task was successfully updated.'
     else
       render :edit

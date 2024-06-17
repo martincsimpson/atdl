@@ -1,16 +1,4 @@
-<h1><%= action_name.capitalize %> Recurring Task</h1>
-<%= form_with(model: @recurring_task, local: true) do |form| %>
-  <% if @recurring_task.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@recurring_task.errors.count, "error") %> prohibited this task from being saved:</h2>
-      <ul>
-        <% @recurring_task.errors.full_messages.each do |message| %>
-          <li><%= message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-
+<%= form_with model: @recurring_task do |form| %>
   <div class="field">
     <%= form.label :name %>
     <%= form.text_field :name %>
@@ -18,12 +6,10 @@
 
   <div class="field">
     <%= form.label :schedule %>
-    <%= form.text_field :schedule %>
+    <%= form.select :schedule, options_for_select([['Monday', 'monday'], ['Tuesday', 'tuesday'], ['Wednesday', 'wednesday'], ['Thursday', 'thursday'], ['Friday', 'friday'], ['Saturday', 'saturday'], ['Sunday', 'sunday'], ['Workday', 'workday'], ['Weekend', 'weekend']], selected: @recurring_task.schedule&.split(',')), {}, multiple: true %>
   </div>
 
   <div class="actions">
     <%= form.submit %>
   </div>
 <% end %>
-
-<%= link_to 'Back', recurring_tasks_path %>
