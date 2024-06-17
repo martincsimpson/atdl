@@ -15,4 +15,11 @@ class Project < ApplicationRecord
     end
   end
 
+  def parent
+    self.parent_project || self.workspace
+  end
+
+  def parent_string
+    self.parent.parent_string + " - #{self.name}"
+  end
 end

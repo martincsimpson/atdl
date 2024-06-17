@@ -13,6 +13,7 @@ Rails.application.routes.draw do
       member do
         post :update_status
         post :clear_snooze
+        get :move_form
         patch :move
       end
     end
@@ -23,6 +24,7 @@ Rails.application.routes.draw do
     member do
       post :update_status
       post :clear_snooze
+      get :move_form
       patch :move
     end
     collection do 

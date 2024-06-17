@@ -44,6 +44,7 @@ export default class extends Controller {
 
   showMoveForm(event) {
     event.preventDefault()
+    this.addForm(event) // Fetch and display the form dynamically
     this.moveFormTarget.classList.remove("hidden")
   }
 

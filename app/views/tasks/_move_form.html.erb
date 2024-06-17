@@ -1,0 +1,9 @@
+        <div class="form-container">
+          <%= form_with(url: move_task_path(task), method: :patch, data: { turbo_frame: dom_id(task) }) do %>
+            <div class="field">
+              <%= label_tag :new_parent_id, "Move to Project/Task" %>
+    <%= select_tag :new_parent_id, options_for_select(Project.all.collect { |p| [p.parent_string, p.id] } + Task.all.collect { |t| [t.parent_string, "task_#{t.id}"] }), include_blank: true, data: { controller: 'slim', slim_target: 'field' } %>        <div class="actions">
+              <%= submit_tag 'Move' %>
+            </div>
+          <% end %>
+        </div>

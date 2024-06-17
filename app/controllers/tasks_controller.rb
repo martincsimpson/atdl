@@ -3,7 +3,7 @@ class TasksController < ApplicationController
   include ApplicationHelper
 
   before_action :set_project_or_task, only: [:new, :create, :create_inbox_task]
-  before_action :set_task, only: [:show, :edit, :update, :update_status, :clear_snooze, :move]
+  before_action :set_task, only: [:show, :edit, :update, :update_status, :clear_snooze, :move_form, :move]
 
   def inbox
     @inbox_workspace = Workspace.find_by(name: 'Inbox')
@@ -169,6 +169,9 @@ class TasksController < ApplicationController
     end
   end
 
+  def move_form
+    render turbo_stream: turbo_stream.replace(dom_id(@task, :move_form), partial: "tasks/move_form", locals: { task: @task })
+  end
 
   def move
     new_parent_id = params[:new_parent_id]
@@ -256,6 +259,10 @@ class TasksController < ApplicationController
       1.week.from_now
     when 'month'
       1.month.from_now
+    when 'six_months'
+      6.month.from_now
+    when 'year'
+      1.year.from_now
     else
       nil
     end

@@ -5,4 +5,8 @@ class Workspace < ApplicationRecord
     projects.any? { |project| project.has_atleast_one_task_for(scope) }
   end
 
+  def parent_string
+    self.name
+  end
+
 end

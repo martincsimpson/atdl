@@ -62,4 +62,12 @@ class Task < ApplicationRecord
   def available_transitions
     self.current_state.events.keys
   end
+
+  def parent
+    self.parent_task || self.project
+  end
+
+  def parent_string
+    self.parent.parent_string + " - #{self.name}"
+  end
 end

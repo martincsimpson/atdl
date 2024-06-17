@@ -21,7 +21,7 @@
       <% if task.flagged %>
         <span>TASK IS FLAGGED</span>
       <% end %>
-      <%= link_to 'Move', '#', class: 'button move-task', data: { action: 'click->task-form#showMoveForm', url: move_task_path(task, format: :turbo_stream), target_id: "#{dom_id(task, :move_form)}" } %>
+      <%= link_to 'Move', '#', class: 'button move-task', data: { action: 'click->task-form#showMoveForm', url: move_form_task_path(task, format: :turbo_stream), target_id: "#{dom_id(task, :move_form)}" } %>
 
       <% unless local_assigns[:hide_change] %>
         <% if task.workflow_state != 'done' && task.workflow_state != 'dropped' %>
@@ -69,17 +69,6 @@
     <!-- Move Form -->
     <div class="move-form hidden" data-task-form-target="moveForm">
       <%= turbo_frame_tag dom_id(task, :move_form) do %>
-        <div class="form-container">
-          <%= form_with(url: move_task_path(task), method: :patch, data: { turbo_frame: dom_id(task) }) do %>
-            <div class="field">
-              <%= label_tag :new_parent_id, "Move to Project/Task" %>
-              <%= select_tag :new_parent_id, options_for_select(Project.all.collect { |p| [p.name, p.id] } + Task.all.collect { |t| [t.name, "task_#{t.id}"] }) %>
-            </div>
-            <div class="actions">
-              <%= submit_tag 'Move' %>
-            </div>
-          <% end %>
-        </div>
       <% end %>
     </div>
 
@@ -93,7 +82,7 @@
         </div>
         <div class="field">
           <%= label_tag :snoozed_until, "Snooze Until" %>
-          <%= select_tag :snoozed_until, options_for_select([['Tomorrow', 'tomorrow'], ['In a Few Days', 'few_days'], ['In a Week', 'week'], ['In a Month', 'month']]) %>
+          <%= select_tag :snoozed_until, options_for_select([['Tomorrow', 'tomorrow'], ['In a Few Days', 'few_days'], ['In a Week', 'week'], ['In a Month', 'month'], ['In 6 months', 'six_months'], ['In a year', 'year']]) %>
         </div>
         <div class="actions">
           <%= submit_tag 'Delegate' %>
@@ -111,7 +100,7 @@
         </div>
         <div class="field">
           <%= label_tag :snoozed_until, "Snooze Until" %>
-          <%= select_tag :snoozed_until, options_for_select([['Tomorrow', 'tomorrow'], ['In a Few Days', 'few_days'], ['In a Week', 'week'], ['In a Month', 'month']]) %>
+          <%= select_tag :snoozed_until, options_for_select([['Tomorrow', 'tomorrow'], ['In a Few Days', 'few_days'], ['In a Week', 'week'], ['In a Month', 'month'], ['In 6 months', 'six_months'], ['In a year', 'year']]) %>
         </div>
         <div class="actions">
           <%= submit_tag 'Defer' %>
@@ -125,7 +114,7 @@
         <%= form_with url: update_status_task_path(task), method: :post, data: { turbo_frame: dom_id(task) } do %>
           <div class="field">
             <%= label_tag :snoozed_until, "Update Snooze Until" %>
-            <%= select_tag :snoozed_until, options_for_select([['Tomorrow', 'tomorrow'], ['In a Few Days', 'few_days'], ['In a Week', 'week'], ['In a Month', 'month']]) %>
+          <%= select_tag :snoozed_until, options_for_select([['Tomorrow', 'tomorrow'], ['In a Few Days', 'few_days'], ['In a Week', 'week'], ['In a Month', 'month'], ['In 6 months', 'six_months'], ['In a year', 'year']]) %>
           </div>
           <div class="actions">
             <%= submit_tag 'Update' %>
