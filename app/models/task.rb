@@ -24,6 +24,7 @@ class Task < ApplicationRecord
     end
     state :deferred do
       event :complete, transitions_to: :done
+      event :defer, transitions_to: :deferred
       event :drop, transitions_to: :dropped
     end
     state :delegated do
@@ -115,7 +116,7 @@ class Task < ApplicationRecord
     unless self.current_state == :deferred
       self.process_event!(:defer)
     end
-    
+
     if apply_to_all_subtasks
       tasks.each do |subtask|
         subtask.defer_task(deferred_reason, snoozed_until, apply_to_all_subtasks: true)
