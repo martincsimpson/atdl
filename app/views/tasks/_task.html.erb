@@ -24,7 +24,7 @@
           <span>TASK IS FLAGGED</span>
         <% end %>
         <%= link_to 'Move', '#', class: 'button move-task', data: { action: 'click->task-form#showMoveForm', url: move_form_task_path(task, format: :turbo_stream), target_id: "#{dom_id(task, :move_form)}" } %>
-
+        <%= link_to 'Add Notes', '#', class: 'button add-notes', data: { action: 'click->task-form#showNotesForm' } %>
         <% unless local_assigns[:hide_change] %>
           <% if task.workflow_state != 'done' && task.workflow_state != 'dropped' %>
             <%= link_to 'Add Subtask', '#', class: 'button add-subtask', data: { action: 'click->task-form#addForm', url: new_task_task_path(task, format: :turbo_stream), target_id: "#{dom_id(task, :new_task_form)}" } %>
@@ -139,6 +139,20 @@
           <!-- This is where the new subtask form will be inserted -->
         </div>
       <% end %>
+
+      <!-- Notes Form -->
+      <div class="notes-form hidden" data-task-form-target="notesForm">
+        <%= form_with model: task, url: task_path(task), method: :patch, data: { turbo_frame: dom_id(task) }, class: "notes-form-inner" do |form| %>
+          <div class="field">
+            <%= form.label :notes, "Notes" %>
+            <%= form.text_area :notes, rows: 5 %>
+          </div>
+          <div class="actions">
+            <%= form.submit 'Save Notes' %>
+          </div>
+        <% end %>
+      </div>
+
     <% else %>
       <div class="task-header">
         <div class="task-name" data-inline-edit-target="display" data-action="dblclick->inline-edit#edit">

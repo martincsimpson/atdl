@@ -247,6 +247,6 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:name, :parent_task_id, :delegated_to, :snoozed_until, :deferred_reason, :new_parent_id)
+    params.require(:task).permit(:name, :parent_task_id, :delegated_to, :snoozed_until, :deferred_reason, :new_parent_id, :notes)
   end
 end

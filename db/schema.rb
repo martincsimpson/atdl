@@ -10,7 +10,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_14_113843) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_17_100632) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "projects", force: :cascade do |t|
     t.string "name"
     t.integer "workspace_id"
@@ -40,6 +43,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_14_113843) do
     t.datetime "snoozed_until"
     t.string "deferred_reason"
     t.boolean "flagged", default: false
+    t.text "notes"
     t.index ["parent_task_id"], name: "index_tasks_on_parent_task_id"
     t.index ["project_id"], name: "index_tasks_on_project_id"
   end

@@ -3,6 +3,8 @@ class Task < ApplicationRecord
   belongs_to :parent_task, class_name: 'Task', optional: true
   has_many :tasks, class_name: 'Task', foreign_key: 'parent_task_id', dependent: :destroy
 
+  validates :notes, length: { maximum: 1000 }, allow_blank: true
+
   include Workflow
 
   workflow do
