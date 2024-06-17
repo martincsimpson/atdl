@@ -128,16 +128,17 @@ class TasksController < ApplicationController
 
     # We're updating only snooze
     if params[:event].nil? && params[:snoozed_until]
-      @task.update(snoozed_until: parse_snooze_date(params[:snoozed_until]))
+      @task.update_snooze_date(parse_snooze_date(params[:snoozed_until]))
     else
       event = params[:event].to_sym
       if @task.available_transitions.include?(event)
         if event == :delegate
-          @task.update(delegated_to: params[:delegated_to], snoozed_until: parse_snooze_date(params[:snoozed_until]))
+          @task.delegate_task(params[:delegated_to], params[:snoozed_until], apply_to_all_subtasks: params[:apply_to_all_subtasks] == '1')
         elsif event == :defer
-          @task.update(deferred_reason: params[:deferred_reason], snoozed_until: parse_snooze_date(params[:snoozed_until]))
+          @task.defer_task(params[:deferred_reason], params[:snoozed_until], apply_to_all_subtasks: params[:apply_to_all_subtasks] == '1')
+        else
+          @task.process_event!(event)
         end
-        @task.process_event!(event)
       else
         head :unprocessable_entity
       end
@@ -247,24 +248,5 @@ class TasksController < ApplicationController
 
   def task_params
     params.require(:task).permit(:name, :parent_task_id, :delegated_to, :snoozed_until, :deferred_reason, :new_parent_id)
-  end
-
-  def parse_snooze_date(snooze_option)
-    case snooze_option
-    when 'tomorrow'
-      1.day.from_now
-    when 'few_days'
-      3.days.from_now
-    when 'week'
-      1.week.from_now
-    when 'month'
-      1.month.from_now
-    when 'six_months'
-      6.month.from_now
-    when 'year'
-      1.year.from_now
-    else
-      nil
-    end
   end
 end

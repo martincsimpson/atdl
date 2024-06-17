@@ -87,4 +87,65 @@ class Task < ApplicationRecord
     end
   end
 
+  # Delegate the task and optionally apply to all subtasks
+  def delegate_task(delegated_to, snoozed_until, apply_to_all_subtasks: false)
+    if self.current_state == :new
+      self.process_event!(:start_todo)
+    end
+
+    self.update(delegated_to: delegated_to, snoozed_until: parse_snooze_date(snoozed_until))
+    unless self.current_state == :delegated
+      self.process_event!(:delegate)
+    end
+
+    if apply_to_all_subtasks
+      tasks.each do |subtask|
+        subtask.delegate_task(delegated_to, snoozed_until, apply_to_all_subtasks: true)
+      end
+    end
+  end
+
+  # Defer the task and optionally apply to all subtasks
+  def defer_task(deferred_reason, snoozed_until, apply_to_all_subtasks: false)
+    if self.current_state == :new
+      self.process_event!(:start_todo)
+    end
+
+    self.update(deferred_reason: deferred_reason, snoozed_until: parse_snooze_date(snoozed_until))
+    unless self.current_state == :deferred
+      self.process_event!(:defer)
+    end
+    
+    if apply_to_all_subtasks
+      tasks.each do |subtask|
+        subtask.defer_task(deferred_reason, snoozed_until, apply_to_all_subtasks: true)
+      end
+    end
+  end
+  
+  def update_snooze_date(snoozed_until)
+    self.update(snoozed_until: parse_snooze_date(snoozed_until))
+  end
+
+  private
+
+  def parse_snooze_date(snooze_option)
+    case snooze_option
+    when 'tomorrow'
+      1.day.from_now
+    when 'few_days'
+      3.days.from_now
+    when 'week'
+      1.week.from_now
+    when 'month'
+      1.month.from_now
+    when 'six_months'
+      6.month.from_now
+    when 'year'
+      1.year.from_now
+    else
+      nil
+    end
+  end
+
 end

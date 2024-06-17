@@ -87,6 +87,10 @@
             <%= label_tag :snoozed_until, "Snooze Until" %>
             <%= select_tag :snoozed_until, options_for_select([['Tomorrow', 'tomorrow'], ['In a Few Days', 'few_days'], ['In a Week', 'week'], ['In a Month', 'month'], ['In 6 months', 'six_months'], ['In a year', 'year']]) %>
           </div>
+          <div class="field">
+            <%= label_tag :apply_to_all_subtasks, "Apply to All Subtasks" %>
+            <%= check_box_tag :apply_to_all_subtasks, '1' %>
+          </div>
           <div class="actions">
             <%= submit_tag 'Delegate' %>
           </div>
@@ -104,6 +108,10 @@
           <div class="field">
             <%= label_tag :snoozed_until, "Snooze Until" %>
             <%= select_tag :snoozed_until, options_for_select([['Tomorrow', 'tomorrow'], ['In a Few Days', 'few_days'], ['In a Week', 'week'], ['In a Month', 'month'], ['In 6 months', 'six_months'], ['In a year', 'year']]) %>
+          </div>
+          <div class="field">
+            <%= label_tag :apply_to_all_subtasks, "Apply to All Subtasks" %>
+            <%= check_box_tag :apply_to_all_subtasks, '1' %>
           </div>
           <div class="actions">
             <%= submit_tag 'Defer' %>
