@@ -7,9 +7,9 @@ class Project < ApplicationRecord
   def has_atleast_one_task_for(scope)
     case scope
     when :today
-      tasks.due_today.exists? || projects.any? { |sub_project| sub_project.has_atleast_one_task_for(scope) }
+      tasks.due_today.exists? || projects.any? { |sub_project| sub_project.has_atleast_one_task_for(scope) } || tasks.any? { |task| task.has_atleast_one_sub_task_for(scope) }
     when :review
-      tasks.for_review.exists? || projects.any? { |sub_project| sub_project.has_atleast_one_task_for(scope) }
+      tasks.for_review.exists? || projects.any? { |sub_project| sub_project.has_atleast_one_task_for(scope) } || tasks.any? { |task| task.has_atleast_one_sub_task_for(scope) }
     else
       false
     end

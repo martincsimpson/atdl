@@ -70,4 +70,15 @@ class Task < ApplicationRecord
   def parent_string
     self.parent.parent_string + " - #{self.name}"
   end
+
+  def has_atleast_one_sub_task_for(scope)
+    case scope
+    when :today
+      tasks.due_today.exists? || tasks.any? { |sub_task| sub_task.has_atleast_one_sub_task_for(scope) }
+    when :review
+      tasks.for_review.exists? || tasks.any? { |sub_task| sub_task.has_atleast_one_sub_task_for(scope) }
+    else
+      false
+    end
+  end
 end
