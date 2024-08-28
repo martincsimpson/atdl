@@ -4,8 +4,7 @@ export default class extends Controller {
   static targets = ["form", "details"]
 
   connect() {
-    console.log("ProjectFormController connected123")
-    this.collapsed = false
+    console.log("ProjectFormController connected")
   }
 
   addForm(event) {
@@ -38,9 +37,10 @@ export default class extends Controller {
 
   toggle() {
     console.log("Toggle clicked")
-    this.collapsed = !this.collapsed
-    this.detailsTarget.classList.toggle("hidden", this.collapsed)
-    this.element.querySelector(".toggle-button").textContent = this.collapsed ? "+" : "-"
+    const isCollapsed = this.element.getAttribute("data-collapsed") === "true"
+    this.element.setAttribute("data-collapsed", !isCollapsed)
+    this.detailsTarget.classList.toggle("hidden", !isCollapsed)
+    this.element.querySelector("button").textContent = !isCollapsed ? "+" : "-"
 
     // Make an API call to update the hidden state
     const projectId = this.element.id.split("_")[1]
@@ -50,7 +50,7 @@ export default class extends Controller {
         "Content-Type": "application/json",
         "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').getAttribute("content")
       },
-      body: JSON.stringify({ hidden: this.collapsed })
+      body: JSON.stringify({ hidden: !isCollapsed })
     })
     .then(response => response.json())
     .then(data => {
@@ -58,5 +58,4 @@ export default class extends Controller {
     })
     .catch(error => console.error("Error updating project hidden state:", error))
   }
-
 }

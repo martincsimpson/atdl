@@ -5,7 +5,6 @@ export default class extends Controller {
 
   connect() {
     console.log("TaskFormController connected")
-    this.collapsed = false
   }
 
   addForm(event) {
@@ -61,9 +60,10 @@ export default class extends Controller {
 
   toggle() {
     console.log("Toggle clicked")
-    this.collapsed = !this.collapsed
-    this.detailsTarget.classList.toggle("hidden", this.collapsed)
-    this.element.querySelector("button").textContent = this.collapsed ? "+" : "-"
+    const isCollapsed = this.element.getAttribute("data-collapsed") === "true"
+    this.element.setAttribute("data-collapsed", !isCollapsed)
+    this.detailsTarget.classList.toggle("hidden", !isCollapsed)
+    this.element.querySelector("button").textContent = !isCollapsed ? "+" : "-"
 
     // Make an API call to update the hidden state
     const taskId = this.element.id.split("_")[1]
@@ -73,7 +73,7 @@ export default class extends Controller {
         "Content-Type": "application/json",
         "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').getAttribute("content")
       },
-      body: JSON.stringify({ hidden: this.collapsed })
+      body: JSON.stringify({ hidden: !isCollapsed })
     })
     .then(response => response.json())
     .then(data => {
