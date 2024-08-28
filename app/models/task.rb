@@ -3,7 +3,7 @@ class Task < ApplicationRecord
   belongs_to :parent_task, class_name: 'Task', optional: true
   has_many :tasks, class_name: 'Task', foreign_key: 'parent_task_id', dependent: :destroy
 
-  validates :notes, length: { maximum: 1000 }, allow_blank: true
+  validates :notes, length: { maximum: 10000 }, allow_blank: true
 
   include Workflow
 
@@ -26,11 +26,12 @@ class Task < ApplicationRecord
     end
     state :deferred do
       event :complete, transitions_to: :done
-      event :delegate, transitions_to: :delegate
+      event :delegate, transitions_to: :delegated
       event :defer, transitions_to: :deferred
       event :drop, transitions_to: :dropped
     end
     state :delegated do
+      event :delegate, transitions_to: :delegated
       event :complete, transitions_to: :done
       event :drop, transitions_to: :dropped
     end
@@ -97,8 +98,8 @@ class Task < ApplicationRecord
       self.process_event!(:start_todo)
     end
 
-    self.update(delegated_to: delegated_to, snoozed_until: parse_snooze_date(snoozed_until))
-    unless self.current_state == :delegated
+    if self.current_state != :done and self.current_state != :dropped
+      self.update(delegated_to: delegated_to, snoozed_until: parse_snooze_date(snoozed_until))
       self.process_event!(:delegate)
     end
 
@@ -115,8 +116,8 @@ class Task < ApplicationRecord
       self.process_event!(:start_todo)
     end
 
-    self.update(deferred_reason: deferred_reason, snoozed_until: parse_snooze_date(snoozed_until))
-    unless self.current_state == :deferred
+    if self.current_state != :done and self.current_state != :dropped
+      self.update(deferred_reason: deferred_reason, snoozed_until: parse_snooze_date(snoozed_until))
       self.process_event!(:defer)
     end
 

@@ -1,10 +1,11 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["form"]
+  static targets = ["form", "details"]
 
   connect() {
-    console.log("ProjectFormController connected")
+    console.log("ProjectFormController connected123")
+    this.collapsed = false
   }
 
   addForm(event) {
@@ -34,4 +35,12 @@ export default class extends Controller {
       })
       .catch(error => console.error("Error fetching form: ", error))
   }
+
+  toggle() {
+    console.log("Toggle clicked")
+    this.collapsed = !this.collapsed
+    this.detailsTarget.classList.toggle("hidden", this.collapsed)
+    this.element.querySelector(".toggle-button").textContent = this.collapsed ? "+" : "-"
+  }
+
 }

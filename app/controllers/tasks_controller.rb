@@ -128,7 +128,7 @@ class TasksController < ApplicationController
 
     # We're updating only snooze
     if params[:event].nil? && params[:snoozed_until]
-      @task.update_snooze_date(parse_snooze_date(params[:snoozed_until]))
+      @task.update_snooze_date(params[:snoozed_until])
     else
       event = params[:event].to_sym
       if @task.available_transitions.include?(event)
