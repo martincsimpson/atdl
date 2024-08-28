@@ -17,6 +17,9 @@ Rails.application.routes.draw do
         patch :move
       end
     end
+    member do
+      patch :toggle_hidden
+    end
   end
 
   resources :tasks, only: [:show, :edit, :update, :destroy] do

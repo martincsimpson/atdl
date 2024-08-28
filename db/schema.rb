@@ -10,13 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_17_100632) do
+ActiveRecord::Schema[7.1].define(version: 2024_08_28_050107) do
   create_table "projects", force: :cascade do |t|
     t.string "name"
     t.integer "workspace_id"
     t.integer "parent_project_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.boolean "hidden"
     t.index ["parent_project_id"], name: "index_projects_on_parent_project_id"
     t.index ["workspace_id"], name: "index_projects_on_workspace_id"
   end

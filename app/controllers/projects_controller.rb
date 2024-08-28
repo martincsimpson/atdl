@@ -2,7 +2,7 @@ class ProjectsController < ApplicationController
   include ActionView::RecordIdentifier
 
   before_action :set_workspace_or_parent, only: [:new, :create]
-  before_action :set_project, only: [:show, :edit, :update, :destroy]
+  before_action :set_project, only: [:show, :edit, :update, :destroy, :toggle_hidden]
 
   def show
   end
@@ -53,6 +53,11 @@ class ProjectsController < ApplicationController
     Rails.logger.info "Destroying project with ID: #{@project.id}"
     @project.destroy
     redirect_to workspaces_path
+  end
+
+  def toggle_hidden
+    @project.update(hidden: params[:hidden])
+    render json: { hidden: @project.hidden }
   end
 
   private

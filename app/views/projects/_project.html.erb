@@ -1,7 +1,7 @@
 <%= turbo_frame_tag dom_id(project) do %>
   <div class="project" id="<%= dom_id(project) %>" data-controller="inline-edit project-form task-form">
     <div class="project-header">
-      <button data-action="click->project-form#toggle" class="toggle-button">-</button>
+      <button data-action="click->project-form#toggle" class="toggle-button"><%= project.hidden ? '+' : '-' %></button>
       <div class="project-name" data-inline-edit-target="display" data-action="dblclick->inline-edit#edit">
         <%= project.name %>
       </div>
@@ -11,7 +11,7 @@
       <% end %>
     </div>
 
-    <div data-project-form-target="details" class="project-details">
+    <div data-project-form-target="details" class="project-details <%= 'hidden' if project.hidden %>">
 
       <%= turbo_frame_tag dom_id(project, :new_project_form) do %>
         <div class="form-container">
