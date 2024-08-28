@@ -85,6 +85,11 @@
   flex-grow: 1;
 }
 
+.task-actions {
+  display: flex;
+  gap: 5px;
+}
+
 .form-container {
   margin-top: 5px;
 }
