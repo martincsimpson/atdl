@@ -6,7 +6,9 @@
   <%= csrf_meta_tags %>
   <%= csp_meta_tag %>
 
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="https://unpkg.com/slim-select@latest/dist/slimselect.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
   <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
   <%= stylesheet_link_tag 'workspaces', media: 'all', 'data-turbo-track': 'reload' %>
@@ -14,19 +16,24 @@
 </head>
 
 <body>
-  <div class="container">
-    <div class="sidebar">
-      <ul>
-        <li><%= link_to 'Inbox', inbox_path, class: ('active' if current_page?(inbox_path)) %></li>
-        <li><%= link_to 'Today', today_path, class: ('active' if current_page?(today_path)) %></li>
-        <li><%= link_to 'Review', review_path, class: ('active' if current_page?(review_path)) %></li>
-        <li><%= link_to 'Master View', master_path, class: ('active' if current_page?(master_path)) %></li>
-        <li><%= link_to 'Recurring Tasks', recurring_tasks_path, class: ('active' if current_page?(recurring_tasks_path)) %></li>
-      </ul>
-    </div>
-    <div class="main-content">
-      <%= yield %>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-2 sidebar bg-light">
+        <ul class="nav flex-column">
+          <li class="nav-item"><%= link_to 'Inbox', inbox_path, class: "nav-link #{'active' if current_page?(inbox_path)}" %></li>
+          <li class="nav-item"><%= link_to 'Today', today_path, class: "nav-link #{'active' if current_page?(today_path)}" %></li>
+          <li class="nav-item"><%= link_to 'Review', review_path, class: "nav-link #{'active' if current_page?(review_path)}" %></li>
+          <li class="nav-item"><%= link_to 'Master View', master_path, class: "nav-link #{'active' if current_page?(master_path)}" %></li>
+          <li class="nav-item"><%= link_to 'Recurring Tasks', recurring_tasks_path, class: "nav-link #{'active' if current_page?(recurring_tasks_path)}" %></li>
+        </ul>
+      </div>
+      <div class="col-md-10 main-content">
+        <%= yield %>
+      </div>
     </div>
   </div>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
 </html>

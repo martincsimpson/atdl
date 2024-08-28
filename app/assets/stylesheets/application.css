@@ -14,7 +14,7 @@
  *= require_self
  */
 
- .hidden {
+.hidden {
   display: none;
 }
 
@@ -22,12 +22,12 @@
 .project-header {
   display: flex;
   align-items: center;
-  gap: 5px; /* Reduced gap to minimize white space */
+  gap: 5px;
 }
 
 .workflow-buttons {
   display: flex;
-  gap: 5px; /* Reduced gap to minimize white space */
+  gap: 2px; /* Reduced gap */
 }
 
 .workflow-form {
@@ -35,7 +35,7 @@
 }
 
 .transition-button {
-  margin-right: 2px; /* Reduced margin for compact buttons */
+  margin-right: 2px;
 }
 
 .task-table,
@@ -47,22 +47,38 @@
 .task-table td,
 .project-table td {
   border: 1px solid #ccc;
-  padding: 5px; /* Reduced padding to minimize white space */
+  padding: 5px;
 }
 
 .task,
 .project {
-  margin-bottom: 5px; /* Reduced margin to minimize white space */
+  margin-bottom: 5px;
 }
 
 .task {
-  border: 1px solid #000;
+  padding-left: 10px; /* Reduced padding */
+  border-left: 2px solid #ccc;
+  margin-bottom: 5px; /* Reduced margin */
 }
 
 .project {
   border: 1px solid #000;
-  margin-bottom: 10px; /* Reduced margin to minimize white space */
+  margin-bottom: 5px; /* Reduced margin */
 }
+
+.task .task {
+  padding-left: 10px; /* Reduced padding */
+  border-left: 2px solid #aaa;
+  background-color: #f9f9f9;
+}
+
+.task .task .task {
+  padding-left: 10px; /* Reduced padding */
+  border-left: 2px solid #888;
+  background-color: #f0f0f0;
+}
+
+/* Add more levels if needed */
 
 .task-name,
 .project-name {
@@ -70,25 +86,24 @@
 }
 
 .form-container {
-  margin-top: 5px; /* Reduced margin to minimize white space */
+  margin-top: 5px;
 }
 
 .field {
-  margin-bottom: 5px; /* Reduced margin to minimize white space */
+  margin-bottom: 5px;
 }
 
 .actions {
-  margin-top: 5px; /* Reduced margin to minimize white space */
+  margin-top: 5px;
 }
 
 /* Sidebar styles */
-.container {
+.container-fluid {
   display: flex;
-  width: 100%; /* Ensure the container takes full width */
+  width: 100%;
 }
 
 .sidebar {
-  width: 180px; /* Adjusted width for better space utilization */
   background-color: #f8f9fa;
   padding: 10px;
 }
@@ -99,7 +114,7 @@
 }
 
 .sidebar ul li {
-  margin: 5px 0; /* Reduced margin for compact sidebar */
+  margin: 5px 0;
 }
 
 .sidebar ul li a {
@@ -113,7 +128,7 @@
 
 .main-content {
   flex-grow: 1;
-  padding: 10px; /* Reduced padding to minimize white space */
+  padding: 10px;
 }
 
 

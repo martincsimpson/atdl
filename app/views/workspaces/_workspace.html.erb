@@ -1,24 +1,25 @@
-<div class="workspace" id="<%= dom_id(workspace) %>" data-controller="workspace-form">
-  <h2>
-    <%= workspace.name %>
-    <%= link_to 'Add Project', '#', class: 'button add-project', data: { action: 'click->workspace-form#addForm', url: new_workspace_project_path(workspace, format: :turbo_stream), target_id: "#{dom_id(workspace, :new_project_form)}" } %>
-  </h2>
-
-  <%= turbo_frame_tag dom_id(workspace, :new_project_form) do %>
-    <!-- This is where the new project form will be inserted -->
-  <% end %>
-
-  <%= turbo_frame_tag dom_id(workspace, :projects_container) do %>
-    <% if workspace.projects.any? %>
-      <ul>
-        <% workspace.projects.each do |project| %>
-          <% if project.any_task_matching?(local_assigns[:tasks_scope]) %>
-            <li>
-              <%= render partial: 'projects/project', locals: { project: project, tasks_scope: tasks_scope } %>
-            </li>
-          <% end %>
-        <% end %>
-      </ul>
+<div class="workspace card mb-3" id="<%= dom_id(workspace) %>" data-controller="workspace-form">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <h2 class="h5 mb-0"><%= workspace.name %></h2>
+    <%= link_to 'Add Project', '#', class: 'btn btn-primary btn-sm', data: { action: 'click->workspace-form#addForm', url: new_workspace_project_path(workspace, format: :turbo_stream), target_id: "#{dom_id(workspace, :new_project_form)}" } %>
+  </div>
+  <div class="card-body">
+    <%= turbo_frame_tag dom_id(workspace, :new_project_form) do %>
+      <!-- This is where the new project form will be inserted -->
     <% end %>
-  <% end %>
+
+    <%= turbo_frame_tag dom_id(workspace, :projects_container) do %>
+      <% if workspace.projects.any? %>
+        <ul class="list-group">
+          <% workspace.projects.each do |project| %>
+            <% if project.any_task_matching?(local_assigns[:tasks_scope]) %>
+              <li class="list-group-item">
+                <%= render partial: 'projects/project', locals: { project: project, tasks_scope: tasks_scope } %>
+              </li>
+            <% end %>
+          <% end %>
+        </ul>
+      <% end %>
+    <% end %>
+  </div>
 </div>

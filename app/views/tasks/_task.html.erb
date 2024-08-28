@@ -1,8 +1,7 @@
 <%= turbo_frame_tag dom_id(task) do %>
-  <div class="task" id="<%= dom_id(task) %>" data-controller="inline-edit task-form">
+  <div class="task card mb-3" id="<%= dom_id(task) %>" data-controller="inline-edit task-form">
     <% if task.matches_scope?(local_assigns[:tasks_scope]) %>
-
-      <div class="task-header">
+      <div class="card-header d-flex justify-content-between align-items-center">
         <div class="task-name" data-inline-edit-target="display" data-action="dblclick->inline-edit#edit">
           <%= task.name %>
         </div>
@@ -21,48 +20,49 @@
         </div>
 
         <% if task.flagged %>
-          <span>TASK IS FLAGGED</span>
+          <span class="badge badge-danger">TASK IS FLAGGED</span>
         <% end %>
-        <%= link_to 'Move', '#', class: 'button move-task', data: { action: 'click->task-form#showMoveForm', url: move_form_task_path(task, format: :turbo_stream), target_id: "#{dom_id(task, :move_form)}" } %>
-        <%= link_to 'Add Notes', '#', class: 'button add-notes', data: { action: 'click->task-form#showNotesForm' } %>
-        <% unless local_assigns[:hide_change] %>
-          <% if task.workflow_state != 'done' && task.workflow_state != 'dropped' %>
-            <%= link_to 'Add Subtask', '#', class: 'button add-subtask', data: { action: 'click->task-form#addForm', url: new_task_task_path(task, format: :turbo_stream), target_id: "#{dom_id(task, :new_task_form)}" } %>
-            <div class="workflow-buttons">
-              <% task.available_transitions.each do |event| %>
-                <% if event == :delegate %>
-                  <%= form_with url: update_status_task_path(task), method: :post, data: { turbo_frame: dom_id(task) }, class: "workflow-form" do %>
-                    <%= hidden_field_tag :event, event %>
-                    <%= submit_tag event.to_s.humanize, class: "transition-button", data: { action: 'click->task-form#showDelegateForm' } %>
-                  <% end %>
-                <% elsif event == :defer %>
-                  <%= form_with url: update_status_task_path(task), method: :post, data: { turbo_frame: dom_id(task) }, class: "workflow-form" do %>
-                    <%= hidden_field_tag :event, event %>
-                    <%= submit_tag event.to_s.humanize, class: "transition-button", data: { action: 'click->task-form#showDeferForm' } %>
-                  <% end %>
-                <% else %>
-                  <%= form_with url: update_status_task_path(task), method: :post, data: { turbo_frame: dom_id(task) }, class: "workflow-form" do %>
-                    <%= hidden_field_tag :event, event %>
-                    <%= submit_tag event.to_s.humanize, class: "transition-button" %>
+        <div>
+          <%= link_to 'Move', '#', class: 'btn btn-link btn-sm', data: { action: 'click->task-form#showMoveForm', url: move_form_task_path(task, format: :turbo_stream), target_id: "#{dom_id(task, :move_form)}" } %>
+          <%= link_to 'Add Notes', '#', class: 'btn btn-link btn-sm', data: { action: 'click->task-form#showNotesForm' } %>
+          <% unless local_assigns[:hide_change] %>
+            <% if task.workflow_state != 'done' && task.workflow_state != 'dropped' %>
+              <%= link_to 'Add Subtask', '#', class: 'btn btn-link btn-sm', data: { action: 'click->task-form#addForm', url: new_task_task_path(task, format: :turbo_stream), target_id: "#{dom_id(task, :new_task_form)}" } %>
+              <div class="workflow-buttons d-flex">
+                <% task.available_transitions.each do |event| %>
+                  <% if event == :delegate %>
+                    <%= form_with url: update_status_task_path(task), method: :post, data: { turbo_frame: dom_id(task) }, class: "workflow-form" do %>
+                      <%= hidden_field_tag :event, event %>
+                      <%= submit_tag event.to_s.humanize, class: "btn btn-secondary btn-sm mr-1", data: { action: 'click->task-form#showDelegateForm' } %>
+                    <% end %>
+                  <% elsif event == :defer %>
+                    <%= form_with url: update_status_task_path(task), method: :post, data: { turbo_frame: dom_id(task) }, class: "workflow-form" do %>
+                      <%= hidden_field_tag :event, event %>
+                      <%= submit_tag event.to_s.humanize, class: "btn btn-secondary btn-sm mr-1", data: { action: 'click->task-form#showDeferForm' } %>
+                    <% end %>
+                  <% else %>
+                    <%= form_with url: update_status_task_path(task), method: :post, data: { turbo_frame: dom_id(task) }, class: "workflow-form" do %>
+                      <%= hidden_field_tag :event, event %>
+                      <%= submit_tag event.to_s.humanize, class: "btn btn-secondary btn-sm mr-1" %>
+                    <% end %>
                   <% end %>
                 <% end %>
-              <% end %>
-            </div>
-            <%= button_to 'Update Snooze', '#', class: 'button update-snooze-button', data: { action: 'click->task-form#showSnoozeForm' }, method: :get %>
-            <%= button_to 'Clear Snooze', clear_snooze_task_path(task), class: 'button clear-snooze-button', method: :post %>
+              </div>
+              <%= button_to 'Update Snooze', '#', class: 'btn btn-secondary btn-sm', data: { action: 'click->task-form#showSnoozeForm' }, method: :get %>
+              <%= button_to 'Clear Snooze', clear_snooze_task_path(task), class: 'btn btn-secondary btn-sm', method: :post %>
+            <% end %>
           <% end %>
-        <% end %>
+        </div>
       </div>
 
-
-      <div data-inline-edit-target="formContainer" class="hidden">
+      <div data-inline-edit-target="formContainer" class="hidden card-body">
         <%= turbo_frame_tag "#{dom_id(task)}_edit" do %>
           <div class="form-container">
             <%= form_with(model: task, url: task_path(task), method: :patch, data: { turbo_frame: dom_id(task), action: "turbo:submit-end->inline-edit#success", inline_edit_target: "form" }, local: true) do |form| %>
-              <%= form.text_field :name, class: 'form-field' %>
-              <div class="actions">
-                <%= form.submit "Save", data: { action: "click->inline-edit#save" } %>
-                <%= button_to "Cancel", "#", data: { action: "click->inline-edit#cancel" }, method: :get %>
+              <%= form.text_field :name, class: 'form-control' %>
+              <div class="actions mt-2">
+                <%= form.submit "Save", class: "btn btn-primary btn-sm", data: { action: "click->inline-edit#save" } %>
+                <%= button_to "Cancel", "#", class: "btn btn-secondary btn-sm", data: { action: "click->inline-edit#cancel" }, method: :get %>
               </div>
             <% end %>
           </div>
@@ -81,18 +81,18 @@
           <%= hidden_field_tag :event, 'delegate' %>
           <div class="field">
             <%= label_tag :delegated_to, "Delegated To" %>
-            <%= text_field_tag :delegated_to %>
+            <%= text_field_tag :delegated_to, class: 'form-control' %>
           </div>
           <div class="field">
             <%= label_tag :snoozed_until, "Snooze Until" %>
-            <%= select_tag :snoozed_until, options_for_select([['Tomorrow', 'tomorrow'], ['In a Few Days', 'few_days'], ['In a Week', 'week'], ['In a Month', 'month'], ['In 6 months', 'six_months'], ['In a year', 'year']]) %>
+            <%= select_tag :snoozed_until, options_for_select([['Tomorrow', 'tomorrow'], ['In a Few Days', 'few_days'], ['In a Week', 'week'], ['In a Month', 'month'], ['In 6 months', 'six_months'], ['In a year', 'year']]), class: 'form-control' %>
           </div>
           <div class="field">
             <%= label_tag :apply_to_all_subtasks, "Apply to All Subtasks" %>
             <%= check_box_tag :apply_to_all_subtasks, '1' %>
           </div>
           <div class="actions">
-            <%= submit_tag 'Delegate' %>
+            <%= submit_tag 'Delegate', class: 'btn btn-primary' %>
           </div>
         <% end %>
       </div>
@@ -103,18 +103,18 @@
           <%= hidden_field_tag :event, 'defer' %>
           <div class="field">
             <%= label_tag :deferred_reason, "Reason for Deferment" %>
-            <%= text_field_tag :deferred_reason %>
+            <%= text_field_tag :deferred_reason, class: 'form-control' %>
           </div>
           <div class="field">
             <%= label_tag :snoozed_until, "Snooze Until" %>
-            <%= select_tag :snoozed_until, options_for_select([['Tomorrow', 'tomorrow'], ['In a Few Days', 'few_days'], ['In a Week', 'week'], ['In a Month', 'month'], ['In 6 months', 'six_months'], ['In a year', 'year']]) %>
+            <%= select_tag :snoozed_until, options_for_select([['Tomorrow', 'tomorrow'], ['In a Few Days', 'few_days'], ['In a Week', 'week'], ['In a Month', 'month'], ['In 6 months', 'six_months'], ['In a year', 'year']]), class: 'form-control' %>
           </div>
           <div class="field">
             <%= label_tag :apply_to_all_subtasks, "Apply to All Subtasks" %>
             <%= check_box_tag :apply_to_all_subtasks, '1' %>
           </div>
           <div class="actions">
-            <%= submit_tag 'Defer' %>
+            <%= submit_tag 'Defer', class: 'btn btn-primary' %>
           </div>
         <% end %>
       </div>
@@ -125,10 +125,10 @@
           <%= form_with url: update_status_task_path(task), method: :post, data: { turbo_frame: dom_id(task) } do %>
             <div class="field">
               <%= label_tag :snoozed_until, "Update Snooze Until" %>
-            <%= select_tag :snoozed_until, options_for_select([['Tomorrow', 'tomorrow'], ['In a Few Days', 'few_days'], ['In a Week', 'week'], ['In a Month', 'month'], ['In 6 months', 'six_months'], ['In a year', 'year']]) %>
+              <%= select_tag :snoozed_until, options_for_select([['Tomorrow', 'tomorrow'], ['In a Few Days', 'few_days'], ['In a Week', 'week'], ['In a Month', 'month'], ['In 6 months', 'six_months'], ['In a year', 'year']]), class: 'form-control' %>
             </div>
             <div class="actions">
-              <%= submit_tag 'Update' %>
+              <%= submit_tag 'Update', class: 'btn btn-primary' %>
             </div>
           <% end %>
         </div>
@@ -145,16 +145,16 @@
         <%= form_with model: task, url: task_path(task), method: :patch, data: { turbo_frame: dom_id(task) }, class: "notes-form-inner" do |form| %>
           <div class="field">
             <%= form.label :notes, "Notes" %>
-            <%= form.text_area :notes, rows: 5 %>
+            <%= form.text_area :notes, rows: 5, class: 'form-control' %>
           </div>
           <div class="actions">
-            <%= form.submit 'Save Notes' %>
+            <%= form.submit 'Save Notes', class: 'btn btn-primary' %>
           </div>
         <% end %>
       </div>
 
     <% else %>
-      <div class="task-header">
+      <div class="card-header">
         <div class="task-name" data-inline-edit-target="display" data-action="dblclick->inline-edit#edit">
           <%= task.name %>
         </div>
