@@ -64,5 +64,21 @@ export default class extends Controller {
     this.collapsed = !this.collapsed
     this.detailsTarget.classList.toggle("hidden", this.collapsed)
     this.element.querySelector("button").textContent = this.collapsed ? "+" : "-"
+
+    // Make an API call to update the hidden state
+    const taskId = this.element.id.split("_")[1]
+    fetch(`/tasks/${taskId}/toggle_hidden`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').getAttribute("content")
+      },
+      body: JSON.stringify({ hidden: this.collapsed })
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log("Task hidden state updated:", data)
+    })
+    .catch(error => console.error("Error updating task hidden state:", error))
   }
 }

@@ -3,7 +3,7 @@ class TasksController < ApplicationController
   include ApplicationHelper
 
   before_action :set_project_or_task, only: [:new, :create, :create_inbox_task]
-  before_action :set_task, only: [:show, :edit, :update, :update_status, :clear_snooze, :move_form, :move]
+  before_action :set_task, only: [:show, :edit, :update, :update_status, :clear_snooze, :move_form, :move, :toggle_hidden]
 
   def inbox
     @inbox_workspace = Workspace.find_by(name: 'Inbox')
@@ -209,6 +209,13 @@ class TasksController < ApplicationController
     redirect_to inbox_path, notice: 'Tasks imported successfully.'
   end
 
+  def toggle_hidden
+    @task.toggle_hidden
+    respond_to do |format|
+      format.json { render json: { hidden: @task.hidden } }
+    end
+  end
+
   private
 
   def parse_tasks(task_list)
@@ -247,6 +254,6 @@ class TasksController < ApplicationController
   end
 
   def task_params
-    params.require(:task).permit(:name, :parent_task_id, :delegated_to, :snoozed_until, :deferred_reason, :new_parent_id, :notes)
+    params.require(:task).permit(:name, :parent_task_id, :delegated_to, :snoozed_until, :deferred_reason, :new_parent_id, :notes, :hidden)
   end
 end

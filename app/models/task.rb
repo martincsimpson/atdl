@@ -60,6 +60,10 @@ class Task < ApplicationRecord
     self.current_state.events.keys
   end
 
+  def toggle_hidden
+    update(hidden: !hidden)
+  end
+
   def parent
     self.parent_task || self.project
   end

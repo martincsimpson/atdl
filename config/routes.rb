@@ -15,6 +15,7 @@ Rails.application.routes.draw do
         post :clear_snooze
         get :move_form
         patch :move
+        patch :toggle_hidden
       end
     end
     member do
@@ -29,6 +30,7 @@ Rails.application.routes.draw do
       post :clear_snooze
       get :move_form
       patch :move
+      patch :toggle_hidden
     end
     collection do 
       post :create_inbox_task
