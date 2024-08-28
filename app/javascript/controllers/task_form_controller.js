@@ -1,10 +1,11 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["form", "delegateForm", "deferForm", "moveForm", "updateSnoozeForm", "notesForm"]
+  static targets = ["form", "delegateForm", "deferForm", "moveForm", "updateSnoozeForm", "notesForm", "details"]
 
   connect() {
     console.log("TaskFormController connected")
+    this.collapsed = false
   }
 
   addForm(event) {
@@ -56,5 +57,12 @@ export default class extends Controller {
   showNotesForm(event) {
     event.preventDefault()
     this.notesFormTarget.classList.remove("hidden")
+  }
+
+  toggle() {
+    console.log("Toggle clicked")
+    this.collapsed = !this.collapsed
+    this.detailsTarget.classList.toggle("hidden", this.collapsed)
+    this.element.querySelector("button").textContent = this.collapsed ? "+" : "-"
   }
 }

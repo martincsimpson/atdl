@@ -25,6 +25,16 @@
   gap: 5px;
 }
 
+.card-header {
+  display: flex;
+  align-items: center;
+  padding: 0px;
+}
+
+.card-body {
+  padding: 0px;
+}
+
 .workflow-buttons {
   display: flex;
   gap: 2px; /* Reduced gap */

@@ -2,8 +2,11 @@
   <div class="task card mb-3" id="<%= dom_id(task) %>" data-controller="inline-edit task-form">
     <% if task.matches_scope?(local_assigns[:tasks_scope]) %>
       <div class="card-header d-flex justify-content-between align-items-center">
+        <% unless task.tasks_or_subtasks_matching(local_assigns[:tasks_scope]).empty? %>
+          <button data-action="click->task-form#toggle" class="btn btn-link btn-sm"><%= task.hidden ? '+' : '-' %></button>
+        <% end %>
         <div class="task-name" data-inline-edit-target="display" data-action="dblclick->inline-edit#edit">
-          <%= task.name %>
+        <%= task.name %>
         </div>
 
         <!-- Task Status Display -->
@@ -181,7 +184,6 @@
           </div>
         <% end %>
       </div>
-
     <% else %>
       <div class="card-header">
         <div class="task-name" data-inline-edit-target="display" data-action="dblclick->inline-edit#edit">
@@ -189,11 +191,12 @@
         </div>
       </div>
     <% end %>
-    <%= turbo_frame_tag dom_id(task, :tasks_container) do %>
-      <% task.tasks_or_subtasks_matching(local_assigns[:tasks_scope]).each do |sub_task| %>
-        <%= render partial: 'tasks/task', locals: { task: sub_task, tasks_scope: local_assigns[:tasks_scope], hide_add: local_assigns[:hide_add], hide_change: local_assigns[:hide_change] } %>
+    <div data-task-form-target="details" class="card-body task-details <%= 'hidden' if task.hidden or task.tasks_or_subtasks_matching(local_assigns[:tasks_scope]).empty? %>">
+      <%= turbo_frame_tag dom_id(task, :tasks_container) do %>
+        <% task.tasks_or_subtasks_matching(local_assigns[:tasks_scope]).each do |sub_task| %>
+          <%= render partial: 'tasks/task', locals: { task: sub_task, tasks_scope: local_assigns[:tasks_scope], hide_add: local_assigns[:hide_add], hide_change: local_assigns[:hide_change] } %>
+        <% end %>
       <% end %>
-    <% end %>
-
+    </div>
   </div>
 <% end %>
